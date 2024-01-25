@@ -1,0 +1,3211 @@
+MPASM  5.35               SAAT-ISI-LED(7).ASM   3-6-2023  16:01:34         PAGE  1
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+                      00001 
+                      00002 ; PicBasic Pro Compiler 2.46, (c) 1998, 2005 microEngineering Labs, Inc. All Rights Reserved.  
+  00000001            00003 PM_USED                 EQU     1
+                      00004 
+Error[105]  : Cannot open file (Include File "16F628.INC" not found)
+                      00005         INCLUDE "16F628.INC"
+                      00006 
+  00000020            00007 RAM_START                       EQU     00020h
+  0000014F            00008 RAM_END                         EQU     0014Fh
+  00000003            00009 RAM_BANKS                       EQU     00003h
+  00000020            00010 BANK0_START                     EQU     00020h
+  0000007F            00011 BANK0_END                       EQU     0007Fh
+  000000A0            00012 BANK1_START                     EQU     000A0h
+  000000EF            00013 BANK1_END                       EQU     000EFh
+  00000120            00014 BANK2_START                     EQU     00120h
+  0000014F            00015 BANK2_END                       EQU     0014Fh
+  00002100            00016 EEPROM_START                    EQU     02100h
+  0000217F            00017 EEPROM_END                      EQU     0217Fh
+                      00018 
+  00000020            00019 R0                              EQU     RAM_START + 000h
+  00000022            00020 R1                              EQU     RAM_START + 002h
+  00000024            00021 R2                              EQU     RAM_START + 004h
+  00000026            00022 R3                              EQU     RAM_START + 006h
+  00000028            00023 R4                              EQU     RAM_START + 008h
+  0000002A            00024 R5                              EQU     RAM_START + 00Ah
+  0000002C            00025 R6                              EQU     RAM_START + 00Ch
+  0000002E            00026 R7                              EQU     RAM_START + 00Eh
+  00000030            00027 R8                              EQU     RAM_START + 010h
+  00000032            00028 T1                              EQU     RAM_START + 012h
+  00000034            00029 T2                              EQU     RAM_START + 014h
+  00000036            00030 FLAGS                           EQU     RAM_START + 016h
+  00000037            00031 GOP                             EQU     RAM_START + 017h
+  00000038            00032 RM1                             EQU     RAM_START + 018h
+  00000039            00033 RM2                             EQU     RAM_START + 019h
+  0000003A            00034 RR1                             EQU     RAM_START + 01Ah
+  0000003B            00035 RR2                             EQU     RAM_START + 01Bh
+  0000003C            00036 _Float                          EQU     RAM_START + 01Ch
+  0000003E            00037 _HAM                            EQU     RAM_START + 01Eh
+  00000040            00038 _ISI                            EQU     RAM_START + 020h
+  00000042            00039 _X                              EQU     RAM_START + 022h
+  00000044            00040 _AY                             EQU     RAM_START + 024h
+  00000045            00041 _BIRLER                         EQU     RAM_START + 025h
+  00000046            00042 _DAK                            EQU     RAM_START + 026h
+  00000047            00043 _ESN                            EQU     RAM_START + 027h
+  00000048            00044 _GOR                            EQU     RAM_START + 028h
+  00000049            00045 _GUN                            EQU     RAM_START + 029h
+  0000004A            00046 _MEM                            EQU     RAM_START + 02Ah
+  0000004B            00047 _ONLAR                          EQU     RAM_START + 02Bh
+  0000004C            00048 PB01                            EQU     RAM_START + 02Ch
+  0000004D            00049 _SAAT                           EQU     RAM_START + 02Dh
+  0000004E            00050 _SAYAC                          EQU     RAM_START + 02Eh
+  0000004F            00051 _SAYI                           EQU     RAM_START + 02Fh
+  00000050            00052 _SIGN                           EQU     RAM_START + 030h
+MPASM  5.35               SAAT-ISI-LED(7).ASM   3-6-2023  16:01:34         PAGE  2
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+  00000051            00053 _SN                             EQU     RAM_START + 031h
+  00000052            00054 _TEMP                           EQU     RAM_START + 032h
+  00000053            00055 _Y                              EQU     RAM_START + 033h
+  00000054            00056 _YIL                            EQU     RAM_START + 034h
+Error[113]  : Symbol not previously defined (PORTB)
+  00000000            00057 _PORTL                          EQU      PORTB
+Error[113]  : Symbol not previously defined (PORTA)
+  00000000            00058 _PORTH                          EQU      PORTA
+Error[113]  : Symbol not previously defined (TRISB)
+  00000000            00059 _TRISL                          EQU      TRISB
+Error[113]  : Symbol not previously defined (TRISA)
+  00000000            00060 _TRISH                          EQU      TRISA
+  0000003E            00061 _HAM_LOWBYTE                    EQU     _HAM
+  0000003F            00062 _HAM_HIGHBYTE                   EQU     _HAM + 001h
+                      00063 #define _Comm_Pin               _PORTA_4
+                      00064 #define _Busy                    PB01, 000h
+                      00065 #define _POZ                     PB01, 001h
+                      00066 #define _SIGN_BITI              _HAM_BIT11
+                      00067 #define _DTA                    _PORTB_0
+                      00068 #define _CLK                    _PORTB_1
+                      00069 #define _RTC_DTA                _PORTA_0
+                      00070 #define _RTC_CLK                _PORTA_1
+                      00071 #define _RTC_RST                _PORTA_2
+                      00072 #define _SEC                    _PORTA_5
+                      00073 #define _ASAGI                  _PORTA_6
+                      00074 #define _YUKARI                 _PORTA_7
+                      00075 #define _PORTA_4                 PORTA, 004h
+                      00076 #define _HAM_BIT11              _HAM + 001h, 003h
+                      00077 #define _PORTB_0                 PORTB, 000h
+                      00078 #define _PORTB_1                 PORTB, 001h
+                      00079 #define _PORTA_0                 PORTA, 000h
+                      00080 #define _PORTA_1                 PORTA, 001h
+                      00081 #define _PORTA_2                 PORTA, 002h
+                      00082 #define _PORTA_5                 PORTA, 005h
+                      00083 #define _PORTA_6                 PORTA, 006h
+                      00084 #define _PORTA_7                 PORTA, 007h
+                      00085 #define _PORTA_3                 PORTA, 003h
+                      00086 #define _PORTB_2                 PORTB, 002h
+                      00087 #define _PORTB_3                 PORTB, 003h
+                      00088 #define _PORTB_4                 PORTB, 004h
+                      00089 #define _PORTB_5                 PORTB, 005h
+                      00090 #define _PORTB_6                 PORTB, 006h
+                      00091 #define _PORTB_7                 PORTB, 007h
+                      00092 #define _INTCON_2                INTCON, 002h
+                      00093 
+                      00094 ; Constants.
+  00000001            00095 _NEGAT_ISI                      EQU     00001h
+  000000DF            00096 _Deg                            EQU     000DFh
+Error[105]  : Cannot open file (Include File "SAAT-I~1.MAC" not found)
+                      00097         INCLUDE "SAAT-I~1.MAC"
+Error[105]  : Cannot open file (Include File "PBPPIC14.LIB" not found)
+                      00098         INCLUDE "PBPPIC14.LIB"
+                      00099 
+MPASM  5.35               SAAT-ISI-LED(7).ASM   3-6-2023  16:01:34         PAGE  3
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+Warning[207]: Found label after column 1. (MOVE?CB)
+Error[108]  : Illegal character (0)
+                      00100         MOVE?CB 000h, PORTA
+Warning[207]: Found label after column 1. (MOVE?CB)
+Error[108]  : Illegal character (0)
+                      00101         MOVE?CB 000h, PORTB
+Warning[207]: Found label after column 1. (MOVE?CB)
+Error[108]  : Illegal character (0)
+                      00102         MOVE?CB 000h, TRISB
+Warning[207]: Found label after column 1. (MOVE?CB)
+Error[108]  : Illegal character (0)
+                      00103         MOVE?CB 0E0h, TRISA
+                      00104 
+Warning[207]: Found label after column 1. (ASM?)
+0000                  00105         ASM?
+Warning[207]: Found label after column 1. (DEVICE)
+Error[122]  : Illegal opcode (pic16F628)
+0000                  00106  DEVICE pic16F628                      
+                      00107 
+Warning[207]: Found label after column 1. (ENDASM?)
+0000                  00108         ENDASM?
+                      00109 
+                      00110 
+Warning[207]: Found label after column 1. (ASM?)
+0000                  00111         ASM?
+Warning[207]: Found label after column 1. (DEVICE)
+Error[122]  : Illegal opcode (pic16F628)
+0000                  00112  DEVICE pic16F628, WDT_ON              
+                      00113 
+Warning[207]: Found label after column 1. (ENDASM?)
+0000                  00114         ENDASM?
+                      00115 
+                      00116 
+Warning[207]: Found label after column 1. (ASM?)
+0000                  00117         ASM?
+Warning[207]: Found label after column 1. (DEVICE)
+Error[122]  : Illegal opcode (pic16F628)
+0000                  00118  DEVICE pic16F628, PWRT_ON             
+                      00119 
+Warning[207]: Found label after column 1. (ENDASM?)
+0000                  00120         ENDASM?
+                      00121 
+                      00122 
+Warning[207]: Found label after column 1. (ASM?)
+0000                  00123         ASM?
+Warning[207]: Found label after column 1. (DEVICE)
+Error[122]  : Illegal opcode (pic16F628)
+0000                  00124  DEVICE pic16F628, PROTECT_OFF         
+                      00125 
+Warning[207]: Found label after column 1. (ENDASM?)
+0000                  00126         ENDASM?
+                      00127 
+                      00128 
+MPASM  5.35               SAAT-ISI-LED(7).ASM   3-6-2023  16:01:34         PAGE  4
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+Warning[207]: Found label after column 1. (ASM?)
+0000                  00129         ASM?
+Warning[207]: Found label after column 1. (DEVICE)
+Error[122]  : Illegal opcode (pic16F628)
+0000                  00130  DEVICE pic16F628, MCLR_off            
+                      00131 
+Warning[207]: Found label after column 1. (ENDASM?)
+0000                  00132         ENDASM?
+                      00133 
+                      00134 
+Warning[207]: Found label after column 1. (ASM?)
+0000                  00135         ASM?
+Warning[207]: Found label after column 1. (DEVICE)
+Error[122]  : Illegal opcode (pic16F628)
+0000                  00136  DEVICE pic16F628, INTRC_OSC_NOCLKOUT  
+                      00137 
+Warning[207]: Found label after column 1. (ENDASM?)
+0000                  00138         ENDASM?
+                      00139 
+Warning[207]: Found label after column 1. (ONINT?LL)
+Error[122]  : Illegal opcode (_KESME)
+                      00140         ONINT?LL        _KESME, L00001
+Warning[207]: Found label after column 1. (ICALL?L)
+Error[122]  : Illegal opcode (L00001)
+                      00141         ICALL?L L00001
+Warning[207]: Found label after column 1. (MOVE?CB)
+Error[108]  : Illegal character (0)
+                      00142         MOVE?CB 085h, OPTION_REG
+Warning[207]: Found label after column 1. (ICALL?L)
+Error[122]  : Illegal opcode (L00001)
+                      00143         ICALL?L L00001
+Warning[207]: Found label after column 1. (MOVE?CB)
+Error[108]  : Illegal character (0)
+                      00144         MOVE?CB 0A0h, INTCON
+Warning[207]: Found label after column 1. (ICALL?L)
+Error[122]  : Illegal opcode (L00001)
+                      00145         ICALL?L L00001
+Warning[207]: Found label after column 1. (MOVE?CB)
+Error[108]  : Illegal character (0)
+                      00146         MOVE?CB 000h, TMR0
+Warning[207]: Found label after column 1. (ICALL?L)
+Error[122]  : Illegal opcode (L00001)
+                      00147         ICALL?L L00001
+Warning[207]: Found label after column 1. (MOVE?CB)
+Error[108]  : Illegal character (0)
+                      00148         MOVE?CB 007h, CMCON
+Warning[207]: Found label after column 1. (ICALL?L)
+Error[122]  : Illegal opcode (L00001)
+                      00149         ICALL?L L00001
+Warning[207]: Found label after column 1. (CLEAR?)
+0000                  00150         CLEAR?  
+Warning[207]: Found label after column 1. (ICALL?L)
+Error[122]  : Illegal opcode (L00001)
+MPASM  5.35               SAAT-ISI-LED(7).ASM   3-6-2023  16:01:34         PAGE  5
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+0000                  00151         ICALL?L L00001
+Warning[207]: Found label after column 1. (LOW?T)
+Error[122]  : Illegal opcode (PORTA)
+0000                  00152         LOW?T   _RTC_RST
+Warning[207]: Found label after column 1. (ICALL?L)
+Error[122]  : Illegal opcode (L00001)
+0000                  00153         ICALL?L L00001
+Warning[207]: Found label after column 1. (LOW?T)
+Error[122]  : Illegal opcode (PORTA)
+0000                  00154         LOW?T   _RTC_CLK
+Warning[207]: Found label after column 1. (ICALL?L)
+Error[122]  : Illegal opcode (L00001)
+0000                  00155         ICALL?L L00001
+Warning[207]: Found label after column 1. (GOSUB?L)
+Error[122]  : Illegal opcode (_GECIKME)
+0000                  00156         GOSUB?L _GECIKME
+Warning[207]: Found label after column 1. (ICALL?L)
+Error[122]  : Illegal opcode (L00001)
+0000                  00157         ICALL?L L00001
+Warning[207]: Found label after column 1. (HIGH?T)
+Error[122]  : Illegal opcode (PORTA)
+0000                  00158         HIGH?T  _PORTA_3
+Warning[207]: Found label after column 1. (ICALL?L)
+Error[122]  : Illegal opcode (L00001)
+0000                  00159         ICALL?L L00001
+Warning[207]: Found label after column 1. (GOSUB?L)
+Error[122]  : Illegal opcode (_ZAMAN_OKU)
+0000                  00160         GOSUB?L _ZAMAN_OKU
+Warning[207]: Found label after column 1. (ICALL?L)
+Error[122]  : Illegal opcode (L00001)
+0000                  00161         ICALL?L L00001
+Warning[207]: Found label after column 1. (MOVE?BB)
+Error[122]  : Illegal opcode (_SN)
+0000                  00162         MOVE?BB _SN, _ESN
+                      00163 
+Warning[207]: Found label after column 1. (LABEL?L)
+Error[122]  : Illegal opcode (_BASLA)
+                      00164         LABEL?L _BASLA  
+Warning[207]: Found label after column 1. (ICALL?L)
+Error[122]  : Illegal opcode (L00001)
+                      00165         ICALL?L L00001
+Warning[207]: Found label after column 1. (CMPNE?BCL)
+Error[122]  : Illegal opcode (_Y)
+                      00166         CMPNE?BCL       _Y, 00Fh, L00003
+Warning[207]: Found label after column 1. (MOVE?CB)
+Error[108]  : Illegal character (0)
+                      00167         MOVE?CB 000h, _Y
+Warning[207]: Found label after column 1. (LABEL?L)
+Error[122]  : Illegal opcode (L00003)
+                      00168         LABEL?L L00003  
+Warning[207]: Found label after column 1. (ICALL?L)
+Error[122]  : Illegal opcode (L00001)
+                      00169         ICALL?L L00001
+MPASM  5.35               SAAT-ISI-LED(7).ASM   3-6-2023  16:01:34         PAGE  6
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+Warning[207]: Found label after column 1. (CMPGT?BCB)
+Error[122]  : Illegal opcode (_Y)
+                      00170         CMPGT?BCB       _Y, 005h, T1
+Warning[207]: Found label after column 1. (CMPLT?BCB)
+Error[122]  : Illegal opcode (_Y)
+                      00171         CMPLT?BCB       _Y, 00Bh, T2
+Warning[207]: Found label after column 1. (LAND?BBW)
+Error[122]  : Illegal opcode (T1)
+                      00172         LAND?BBW        T1, T2, T2
+Warning[207]: Found label after column 1. (CMPF?WL)
+Error[122]  : Illegal opcode (T2)
+                      00173         CMPF?WL T2, L00005
+Warning[207]: Found label after column 1. (GOSUB?L)
+Error[122]  : Illegal opcode (_EKRAN1)
+                      00174         GOSUB?L _EKRAN1
+Warning[207]: Found label after column 1. (LABEL?L)
+Error[122]  : Illegal opcode (L00005)
+                      00175         LABEL?L L00005  
+Warning[207]: Found label after column 1. (ICALL?L)
+Error[122]  : Illegal opcode (L00001)
+                      00176         ICALL?L L00001
+Warning[207]: Found label after column 1. (CMPLE?BCL)
+Error[122]  : Illegal opcode (_Y)
+                      00177         CMPLE?BCL       _Y, 00Ah, L00007
+Warning[207]: Found label after column 1. (GOSUB?L)
+Error[122]  : Illegal opcode (_EKRAN2)
+                      00178         GOSUB?L _EKRAN2
+Warning[207]: Found label after column 1. (LABEL?L)
+Error[122]  : Illegal opcode (L00007)
+                      00179         LABEL?L L00007  
+Warning[207]: Found label after column 1. (ICALL?L)
+Error[122]  : Illegal opcode (L00001)
+                      00180         ICALL?L L00001
+Warning[207]: Found label after column 1. (CMPGE?BCL)
+Error[122]  : Illegal opcode (_Y)
+                      00181         CMPGE?BCL       _Y, 006h, L00009
+Warning[207]: Found label after column 1. (GOSUB?L)
+Error[122]  : Illegal opcode (_EKRAN0)
+                      00182         GOSUB?L _EKRAN0
+Warning[207]: Found label after column 1. (LABEL?L)
+Error[122]  : Illegal opcode (L00009)
+                      00183         LABEL?L L00009  
+                      00184 
+Warning[207]: Found label after column 1. (LABEL?L)
+Error[122]  : Illegal opcode (_ATLA)
+                      00185         LABEL?L _ATLA   
+Warning[207]: Found label after column 1. (ICALL?L)
+Error[122]  : Illegal opcode (L00001)
+                      00186         ICALL?L L00001
+Warning[207]: Found label after column 1. (CMPEQ?TCL)
+Error[122]  : Illegal opcode (PORTA)
+                      00187         CMPEQ?TCL       _SEC, 000h, _AYAR
+Warning[207]: Found label after column 1. (ICALL?L)
+MPASM  5.35               SAAT-ISI-LED(7).ASM   3-6-2023  16:01:34         PAGE  7
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+Error[122]  : Illegal opcode (L00001)
+                      00188         ICALL?L L00001
+Warning[207]: Found label after column 1. (GOSUB?L)
+Error[122]  : Illegal opcode (_SENSOROKU)
+                      00189         GOSUB?L _SENSOROKU
+Warning[207]: Found label after column 1. (ICALL?L)
+Error[122]  : Illegal opcode (L00001)
+                      00190         ICALL?L L00001
+Warning[207]: Found label after column 1. (GOTO?L)
+Error[122]  : Illegal opcode (_BASLA)
+                      00191         GOTO?L  _BASLA
+                      00192 
+Warning[207]: Found label after column 1. (LABEL?L)
+Error[122]  : Illegal opcode (_EKRAN0)
+                      00193         LABEL?L _EKRAN0 
+Warning[207]: Found label after column 1. (ICALL?L)
+Error[122]  : Illegal opcode (L00001)
+                      00194         ICALL?L L00001
+Warning[207]: Found label after column 1. (CMPNE?BCL)
+Error[122]  : Illegal opcode (_SAYAC)
+                      00195         CMPNE?BCL       _SAYAC, 01Ch, L00011
+Warning[207]: Found label after column 1. (LOW?T)
+Error[122]  : Illegal opcode (PORTA)
+                      00196         LOW?T   _PORTA_3
+Warning[207]: Found label after column 1. (LABEL?L)
+Error[122]  : Illegal opcode (L00011)
+                      00197         LABEL?L L00011  
+Warning[207]: Found label after column 1. (ICALL?L)
+Error[122]  : Illegal opcode (L00001)
+                      00198         ICALL?L L00001
+Warning[207]: Found label after column 1. (DIG?BCW)
+Error[122]  : Illegal opcode (_SAAT)
+                      00199         DIG?BCW _SAAT, 001h, _X
+Warning[207]: Found label after column 1. (ICALL?L)
+Error[122]  : Illegal opcode (L00001)
+                      00200         ICALL?L L00001
+Warning[207]: Found label after column 1. (GOSUB?L)
+Error[122]  : Illegal opcode (_AL)
+                      00201         GOSUB?L _AL
+Warning[207]: Found label after column 1. (ICALL?L)
+Error[122]  : Illegal opcode (L00001)
+                      00202         ICALL?L L00001
+Warning[207]: Found label after column 1. (SHIFTDATA?T)
+Error[122]  : Illegal opcode (PORTB)
+                      00203         SHIFTDATA?T     _DTA
+Warning[207]: Found label after column 1. (SHIFTCLOCK?T)
+Error[122]  : Illegal opcode (PORTB)
+                      00204         SHIFTCLOCK?T    _CLK
+Warning[207]: Found label after column 1. (SHIFTMODE?C)
+Error[108]  : Illegal character (0)
+                      00205         SHIFTMODE?C     001h
+Warning[207]: Found label after column 1. (SHIFTOUT?BC)
+Error[122]  : Illegal opcode (_SAYI)
+MPASM  5.35               SAAT-ISI-LED(7).ASM   3-6-2023  16:01:34         PAGE  8
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+                      00206         SHIFTOUT?BC     _SAYI, 008h
+Warning[207]: Found label after column 1. (ICALL?L)
+Error[122]  : Illegal opcode (L00001)
+                      00207         ICALL?L L00001
+Warning[207]: Found label after column 1. (HIGH?T)
+Error[122]  : Illegal opcode (PORTB)
+                      00208         HIGH?T  _PORTB_2
+Warning[207]: Found label after column 1. (ICALL?L)
+Error[122]  : Illegal opcode (L00001)
+                      00209         ICALL?L L00001
+Warning[207]: Found label after column 1. (PAUSEUS?C)
+Error[108]  : Illegal character (0)
+                      00210         PAUSEUS?C       002h
+Warning[207]: Found label after column 1. (ICALL?L)
+Error[122]  : Illegal opcode (L00001)
+                      00211         ICALL?L L00001
+Warning[207]: Found label after column 1. (LOW?T)
+Error[122]  : Illegal opcode (PORTB)
+                      00212         LOW?T   _PORTB_2
+Warning[207]: Found label after column 1. (ICALL?L)
+Error[122]  : Illegal opcode (L00001)
+                      00213         ICALL?L L00001
+Warning[207]: Found label after column 1. (DIG?BCW)
+Error[122]  : Illegal opcode (_SAAT)
+                      00214         DIG?BCW _SAAT, 000h, _X
+Warning[207]: Found label after column 1. (ICALL?L)
+Error[122]  : Illegal opcode (L00001)
+                      00215         ICALL?L L00001
+Warning[207]: Found label after column 1. (GOSUB?L)
+Error[122]  : Illegal opcode (_AL)
+                      00216         GOSUB?L _AL
+Warning[207]: Found label after column 1. (ICALL?L)
+Error[122]  : Illegal opcode (L00001)
+                      00217         ICALL?L L00001
+Warning[207]: Found label after column 1. (SHIFTDATA?T)
+Error[122]  : Illegal opcode (PORTB)
+                      00218         SHIFTDATA?T     _DTA
+Warning[207]: Found label after column 1. (SHIFTCLOCK?T)
+Error[122]  : Illegal opcode (PORTB)
+                      00219         SHIFTCLOCK?T    _CLK
+Warning[207]: Found label after column 1. (SHIFTMODE?C)
+Error[108]  : Illegal character (0)
+                      00220         SHIFTMODE?C     001h
+Warning[207]: Found label after column 1. (SHIFTOUT?BC)
+Error[122]  : Illegal opcode (_SAYI)
+                      00221         SHIFTOUT?BC     _SAYI, 008h
+Warning[207]: Found label after column 1. (ICALL?L)
+Error[122]  : Illegal opcode (L00001)
+                      00222         ICALL?L L00001
+Warning[207]: Found label after column 1. (HIGH?T)
+Error[122]  : Illegal opcode (PORTB)
+                      00223         HIGH?T  _PORTB_3
+Warning[207]: Found label after column 1. (ICALL?L)
+MPASM  5.35               SAAT-ISI-LED(7).ASM   3-6-2023  16:01:34         PAGE  9
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+Error[122]  : Illegal opcode (L00001)
+                      00224         ICALL?L L00001
+Warning[207]: Found label after column 1. (PAUSEUS?C)
+Error[108]  : Illegal character (0)
+                      00225         PAUSEUS?C       002h
+Warning[207]: Found label after column 1. (ICALL?L)
+Error[122]  : Illegal opcode (L00001)
+                      00226         ICALL?L L00001
+Warning[207]: Found label after column 1. (LOW?T)
+Error[122]  : Illegal opcode (PORTB)
+                      00227         LOW?T   _PORTB_3
+Warning[207]: Found label after column 1. (ICALL?L)
+Error[122]  : Illegal opcode (L00001)
+                      00228         ICALL?L L00001
+Warning[207]: Found label after column 1. (DIG?BCW)
+Error[122]  : Illegal opcode (_DAK)
+                      00229         DIG?BCW _DAK, 001h, _X
+Warning[207]: Found label after column 1. (ICALL?L)
+Error[122]  : Illegal opcode (L00001)
+                      00230         ICALL?L L00001
+Warning[207]: Found label after column 1. (GOSUB?L)
+Error[122]  : Illegal opcode (_AL)
+                      00231         GOSUB?L _AL
+Warning[207]: Found label after column 1. (ICALL?L)
+Error[122]  : Illegal opcode (L00001)
+                      00232         ICALL?L L00001
+Warning[207]: Found label after column 1. (SHIFTDATA?T)
+Error[122]  : Illegal opcode (PORTB)
+                      00233         SHIFTDATA?T     _DTA
+Warning[207]: Found label after column 1. (SHIFTCLOCK?T)
+Error[122]  : Illegal opcode (PORTB)
+                      00234         SHIFTCLOCK?T    _CLK
+Warning[207]: Found label after column 1. (SHIFTMODE?C)
+Error[108]  : Illegal character (0)
+                      00235         SHIFTMODE?C     001h
+Warning[207]: Found label after column 1. (SHIFTOUT?BC)
+Error[122]  : Illegal opcode (_SAYI)
+                      00236         SHIFTOUT?BC     _SAYI, 008h
+Warning[207]: Found label after column 1. (ICALL?L)
+Error[122]  : Illegal opcode (L00001)
+                      00237         ICALL?L L00001
+Warning[207]: Found label after column 1. (HIGH?T)
+Error[122]  : Illegal opcode (PORTB)
+                      00238         HIGH?T  _PORTB_4
+Warning[207]: Found label after column 1. (ICALL?L)
+Error[122]  : Illegal opcode (L00001)
+                      00239         ICALL?L L00001
+Warning[207]: Found label after column 1. (PAUSEUS?C)
+Error[108]  : Illegal character (0)
+                      00240         PAUSEUS?C       002h
+Warning[207]: Found label after column 1. (ICALL?L)
+Error[122]  : Illegal opcode (L00001)
+                      00241         ICALL?L L00001
+MPASM  5.35               SAAT-ISI-LED(7).ASM   3-6-2023  16:01:34         PAGE 10
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+Warning[207]: Found label after column 1. (LOW?T)
+Error[122]  : Illegal opcode (PORTB)
+                      00242         LOW?T   _PORTB_4
+Warning[207]: Found label after column 1. (ICALL?L)
+Error[122]  : Illegal opcode (L00001)
+                      00243         ICALL?L L00001
+Warning[207]: Found label after column 1. (DIG?BCW)
+Error[122]  : Illegal opcode (_DAK)
+                      00244         DIG?BCW _DAK, 000h, _X
+Warning[207]: Found label after column 1. (ICALL?L)
+Error[122]  : Illegal opcode (L00001)
+                      00245         ICALL?L L00001
+Warning[207]: Found label after column 1. (GOSUB?L)
+Error[122]  : Illegal opcode (_AL)
+                      00246         GOSUB?L _AL
+Warning[207]: Found label after column 1. (ICALL?L)
+Error[122]  : Illegal opcode (L00001)
+                      00247         ICALL?L L00001
+Warning[207]: Found label after column 1. (SHIFTDATA?T)
+Error[122]  : Illegal opcode (PORTB)
+                      00248         SHIFTDATA?T     _DTA
+Warning[207]: Found label after column 1. (SHIFTCLOCK?T)
+Error[122]  : Illegal opcode (PORTB)
+                      00249         SHIFTCLOCK?T    _CLK
+Warning[207]: Found label after column 1. (SHIFTMODE?C)
+Error[108]  : Illegal character (0)
+                      00250         SHIFTMODE?C     001h
+Warning[207]: Found label after column 1. (SHIFTOUT?BC)
+Error[122]  : Illegal opcode (_SAYI)
+                      00251         SHIFTOUT?BC     _SAYI, 008h
+Warning[207]: Found label after column 1. (ICALL?L)
+Error[122]  : Illegal opcode (L00001)
+                      00252         ICALL?L L00001
+Warning[207]: Found label after column 1. (HIGH?T)
+Error[122]  : Illegal opcode (PORTB)
+                      00253         HIGH?T  _PORTB_5
+Warning[207]: Found label after column 1. (ICALL?L)
+Error[122]  : Illegal opcode (L00001)
+                      00254         ICALL?L L00001
+Warning[207]: Found label after column 1. (PAUSEUS?C)
+Error[108]  : Illegal character (0)
+                      00255         PAUSEUS?C       002h
+Warning[207]: Found label after column 1. (ICALL?L)
+Error[122]  : Illegal opcode (L00001)
+                      00256         ICALL?L L00001
+Warning[207]: Found label after column 1. (LOW?T)
+Error[122]  : Illegal opcode (PORTB)
+                      00257         LOW?T   _PORTB_5
+Warning[207]: Found label after column 1. (ICALL?L)
+Error[122]  : Illegal opcode (L00001)
+                      00258         ICALL?L L00001
+Warning[207]: Found label after column 1. (DIG?BCW)
+Error[122]  : Illegal opcode (_SN)
+MPASM  5.35               SAAT-ISI-LED(7).ASM   3-6-2023  16:01:34         PAGE 11
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+                      00259         DIG?BCW _SN, 001h, _X
+Warning[207]: Found label after column 1. (ICALL?L)
+Error[122]  : Illegal opcode (L00001)
+                      00260         ICALL?L L00001
+Warning[207]: Found label after column 1. (GOSUB?L)
+Error[122]  : Illegal opcode (_AL)
+                      00261         GOSUB?L _AL
+Warning[207]: Found label after column 1. (ICALL?L)
+Error[122]  : Illegal opcode (L00001)
+                      00262         ICALL?L L00001
+Warning[207]: Found label after column 1. (SHIFTDATA?T)
+Error[122]  : Illegal opcode (PORTB)
+                      00263         SHIFTDATA?T     _DTA
+Warning[207]: Found label after column 1. (SHIFTCLOCK?T)
+Error[122]  : Illegal opcode (PORTB)
+                      00264         SHIFTCLOCK?T    _CLK
+Warning[207]: Found label after column 1. (SHIFTMODE?C)
+Error[108]  : Illegal character (0)
+                      00265         SHIFTMODE?C     001h
+Warning[207]: Found label after column 1. (SHIFTOUT?BC)
+Error[122]  : Illegal opcode (_SAYI)
+                      00266         SHIFTOUT?BC     _SAYI, 008h
+Warning[207]: Found label after column 1. (ICALL?L)
+Error[122]  : Illegal opcode (L00001)
+                      00267         ICALL?L L00001
+Warning[207]: Found label after column 1. (HIGH?T)
+Error[122]  : Illegal opcode (PORTB)
+                      00268         HIGH?T  _PORTB_6
+Warning[207]: Found label after column 1. (ICALL?L)
+Error[122]  : Illegal opcode (L00001)
+                      00269         ICALL?L L00001
+Warning[207]: Found label after column 1. (PAUSEUS?C)
+Error[108]  : Illegal character (0)
+                      00270         PAUSEUS?C       002h
+Warning[207]: Found label after column 1. (ICALL?L)
+Error[122]  : Illegal opcode (L00001)
+                      00271         ICALL?L L00001
+Warning[207]: Found label after column 1. (LOW?T)
+Error[122]  : Illegal opcode (PORTB)
+                      00272         LOW?T   _PORTB_6
+Warning[207]: Found label after column 1. (ICALL?L)
+Error[122]  : Illegal opcode (L00001)
+                      00273         ICALL?L L00001
+Warning[207]: Found label after column 1. (DIG?BCW)
+Error[122]  : Illegal opcode (_SN)
+                      00274         DIG?BCW _SN, 000h, _X
+Warning[207]: Found label after column 1. (ICALL?L)
+Error[122]  : Illegal opcode (L00001)
+                      00275         ICALL?L L00001
+Warning[207]: Found label after column 1. (GOSUB?L)
+Error[122]  : Illegal opcode (_AL)
+                      00276         GOSUB?L _AL
+Warning[207]: Found label after column 1. (ICALL?L)
+MPASM  5.35               SAAT-ISI-LED(7).ASM   3-6-2023  16:01:34         PAGE 12
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+Error[122]  : Illegal opcode (L00001)
+                      00277         ICALL?L L00001
+Warning[207]: Found label after column 1. (SHIFTDATA?T)
+Error[122]  : Illegal opcode (PORTB)
+                      00278         SHIFTDATA?T     _DTA
+Warning[207]: Found label after column 1. (SHIFTCLOCK?T)
+Error[122]  : Illegal opcode (PORTB)
+                      00279         SHIFTCLOCK?T    _CLK
+Warning[207]: Found label after column 1. (SHIFTMODE?C)
+Error[108]  : Illegal character (0)
+                      00280         SHIFTMODE?C     001h
+Warning[207]: Found label after column 1. (SHIFTOUT?BC)
+Error[122]  : Illegal opcode (_SAYI)
+                      00281         SHIFTOUT?BC     _SAYI, 008h
+Warning[207]: Found label after column 1. (ICALL?L)
+Error[122]  : Illegal opcode (L00001)
+                      00282         ICALL?L L00001
+Warning[207]: Found label after column 1. (HIGH?T)
+Error[122]  : Illegal opcode (PORTB)
+                      00283         HIGH?T  _PORTB_7
+Warning[207]: Found label after column 1. (ICALL?L)
+Error[122]  : Illegal opcode (L00001)
+                      00284         ICALL?L L00001
+Warning[207]: Found label after column 1. (PAUSEUS?C)
+Error[108]  : Illegal character (0)
+                      00285         PAUSEUS?C       002h
+Warning[207]: Found label after column 1. (ICALL?L)
+Error[122]  : Illegal opcode (L00001)
+                      00286         ICALL?L L00001
+Warning[207]: Found label after column 1. (LOW?T)
+Error[122]  : Illegal opcode (PORTB)
+                      00287         LOW?T   _PORTB_7
+Warning[207]: Found label after column 1. (ICALL?L)
+Error[122]  : Illegal opcode (L00001)
+                      00288         ICALL?L L00001
+Warning[207]: Found label after column 1. (RETURN?)
+0000                  00289         RETURN? 
+                      00290 
+Warning[207]: Found label after column 1. (LABEL?L)
+Error[122]  : Illegal opcode (_AL)
+                      00291         LABEL?L _AL     
+Warning[207]: Found label after column 1. (ICALL?L)
+Error[122]  : Illegal opcode (L00001)
+                      00292         ICALL?L L00001
+Warning[207]: Found label after column 1. (LOOKUP?WCLB)
+Error[122]  : Illegal opcode (_X)
+                      00293         LOOKUP?WCLB     _X, 00Ch, L00002, _SAYI
+Warning[207]: Found label after column 1. (LURET?C)
+Error[108]  : Illegal character (0)
+                      00294         LURET?C 03Fh
+Warning[207]: Found label after column 1. (LURET?C)
+Error[108]  : Illegal character (0)
+                      00295         LURET?C 006h
+MPASM  5.35               SAAT-ISI-LED(7).ASM   3-6-2023  16:01:34         PAGE 13
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+Warning[207]: Found label after column 1. (LURET?C)
+Error[108]  : Illegal character (0)
+                      00296         LURET?C 05Bh
+Warning[207]: Found label after column 1. (LURET?C)
+Error[108]  : Illegal character (0)
+                      00297         LURET?C 04Fh
+Warning[207]: Found label after column 1. (LURET?C)
+Error[108]  : Illegal character (0)
+                      00298         LURET?C 066h
+Warning[207]: Found label after column 1. (LURET?C)
+Error[108]  : Illegal character (0)
+                      00299         LURET?C 06Dh
+Warning[207]: Found label after column 1. (LURET?C)
+Error[108]  : Illegal character (0)
+                      00300         LURET?C 07Dh
+Warning[207]: Found label after column 1. (LURET?C)
+Error[108]  : Illegal character (0)
+                      00301         LURET?C 007h
+Warning[207]: Found label after column 1. (LURET?C)
+Error[108]  : Illegal character (0)
+                      00302         LURET?C 07Fh
+Warning[207]: Found label after column 1. (LURET?C)
+Error[108]  : Illegal character (0)
+                      00303         LURET?C 06Fh
+Warning[207]: Found label after column 1. (LURET?C)
+Error[108]  : Illegal character (0)
+                      00304         LURET?C 063h
+Warning[207]: Found label after column 1. (LURET?C)
+Error[108]  : Illegal character (0)
+                      00305         LURET?C 039h
+                      00306 
+Warning[207]: Found label after column 1. (LABEL?L)
+Error[122]  : Illegal opcode (L00002)
+                      00307         LABEL?L L00002  
+Warning[207]: Found label after column 1. (ICALL?L)
+Error[122]  : Illegal opcode (L00001)
+                      00308         ICALL?L L00001
+Warning[207]: Found label after column 1. (RETURN?)
+0000                  00309         RETURN? 
+                      00310 
+Warning[207]: Found label after column 1. (LABEL?L)
+Error[122]  : Illegal opcode (_EKRAN1)
+                      00311         LABEL?L _EKRAN1 
+Warning[207]: Found label after column 1. (ICALL?L)
+Error[122]  : Illegal opcode (L00001)
+                      00312         ICALL?L L00001
+Warning[207]: Found label after column 1. (LOW?T)
+Error[122]  : Illegal opcode (PORTA)
+                      00313         LOW?T   _PORTA_3
+Warning[207]: Found label after column 1. (ICALL?L)
+Error[122]  : Illegal opcode (L00001)
+                      00314         ICALL?L L00001
+Warning[207]: Found label after column 1. (MOVE?CB)
+MPASM  5.35               SAAT-ISI-LED(7).ASM   3-6-2023  16:01:34         PAGE 14
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+Error[108]  : Illegal character (0)
+                      00315         MOVE?CB 000h, _SAYI
+Warning[207]: Found label after column 1. (ICALL?L)
+Error[122]  : Illegal opcode (L00001)
+                      00316         ICALL?L L00001
+Warning[207]: Found label after column 1. (SHIFTDATA?T)
+Error[122]  : Illegal opcode (PORTB)
+                      00317         SHIFTDATA?T     _DTA
+Warning[207]: Found label after column 1. (SHIFTCLOCK?T)
+Error[122]  : Illegal opcode (PORTB)
+                      00318         SHIFTCLOCK?T    _CLK
+Warning[207]: Found label after column 1. (SHIFTMODE?C)
+Error[108]  : Illegal character (0)
+                      00319         SHIFTMODE?C     001h
+Warning[207]: Found label after column 1. (SHIFTOUT?BC)
+Error[122]  : Illegal opcode (_SAYI)
+                      00320         SHIFTOUT?BC     _SAYI, 008h
+Warning[207]: Found label after column 1. (ICALL?L)
+Error[122]  : Illegal opcode (L00001)
+                      00321         ICALL?L L00001
+Warning[207]: Found label after column 1. (HIGH?T)
+Error[122]  : Illegal opcode (PORTB)
+                      00322         HIGH?T  _PORTB_2
+Warning[207]: Found label after column 1. (ICALL?L)
+Error[122]  : Illegal opcode (L00001)
+                      00323         ICALL?L L00001
+Warning[207]: Found label after column 1. (PAUSEUS?C)
+Error[108]  : Illegal character (0)
+                      00324         PAUSEUS?C       002h
+Warning[207]: Found label after column 1. (ICALL?L)
+Error[122]  : Illegal opcode (L00001)
+                      00325         ICALL?L L00001
+Warning[207]: Found label after column 1. (LOW?T)
+Error[122]  : Illegal opcode (PORTB)
+                      00326         LOW?T   _PORTB_2
+Warning[207]: Found label after column 1. (ICALL?L)
+Error[122]  : Illegal opcode (L00001)
+                      00327         ICALL?L L00001
+Warning[207]: Found label after column 1. (CMPNE?TCL)
+Error[122]  : Illegal opcode (_HAM)
+                      00328         CMPNE?TCL       _SIGN_BITI, _NEGAT_ISI, L00013
+Warning[207]: Found label after column 1. (MOVE?CB)
+Error[108]  : Illegal character (0)
+                      00329         MOVE?CB 040h, _SAYI
+Warning[207]: Found label after column 1. (LABEL?L)
+Error[122]  : Illegal opcode (L00013)
+                      00330         LABEL?L L00013  
+Warning[207]: Found label after column 1. (ICALL?L)
+Error[122]  : Illegal opcode (L00001)
+                      00331         ICALL?L L00001
+Warning[207]: Found label after column 1. (SHIFTDATA?T)
+Error[122]  : Illegal opcode (PORTB)
+                      00332         SHIFTDATA?T     _DTA
+MPASM  5.35               SAAT-ISI-LED(7).ASM   3-6-2023  16:01:34         PAGE 15
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+Warning[207]: Found label after column 1. (SHIFTCLOCK?T)
+Error[122]  : Illegal opcode (PORTB)
+                      00333         SHIFTCLOCK?T    _CLK
+Warning[207]: Found label after column 1. (SHIFTMODE?C)
+Error[108]  : Illegal character (0)
+                      00334         SHIFTMODE?C     001h
+Warning[207]: Found label after column 1. (SHIFTOUT?BC)
+Error[122]  : Illegal opcode (_SAYI)
+                      00335         SHIFTOUT?BC     _SAYI, 008h
+Warning[207]: Found label after column 1. (ICALL?L)
+Error[122]  : Illegal opcode (L00001)
+                      00336         ICALL?L L00001
+Warning[207]: Found label after column 1. (HIGH?T)
+Error[122]  : Illegal opcode (PORTB)
+                      00337         HIGH?T  _PORTB_3
+Warning[207]: Found label after column 1. (ICALL?L)
+Error[122]  : Illegal opcode (L00001)
+                      00338         ICALL?L L00001
+Warning[207]: Found label after column 1. (PAUSEUS?C)
+Error[108]  : Illegal character (0)
+                      00339         PAUSEUS?C       002h
+Warning[207]: Found label after column 1. (ICALL?L)
+Error[122]  : Illegal opcode (L00001)
+                      00340         ICALL?L L00001
+Warning[207]: Found label after column 1. (LOW?T)
+Error[122]  : Illegal opcode (PORTB)
+                      00341         LOW?T   _PORTB_3
+Warning[207]: Found label after column 1. (ICALL?L)
+Error[122]  : Illegal opcode (L00001)
+                      00342         ICALL?L L00001
+Warning[207]: Found label after column 1. (DIG?WCW)
+Error[122]  : Illegal opcode (_ISI)
+                      00343         DIG?WCW _ISI, 001h, _X
+Warning[207]: Found label after column 1. (ICALL?L)
+Error[122]  : Illegal opcode (L00001)
+                      00344         ICALL?L L00001
+Warning[207]: Found label after column 1. (GOSUB?L)
+Error[122]  : Illegal opcode (_AL)
+                      00345         GOSUB?L _AL
+Warning[207]: Found label after column 1. (ICALL?L)
+Error[122]  : Illegal opcode (L00001)
+                      00346         ICALL?L L00001
+Warning[207]: Found label after column 1. (SHIFTDATA?T)
+Error[122]  : Illegal opcode (PORTB)
+                      00347         SHIFTDATA?T     _DTA
+Warning[207]: Found label after column 1. (SHIFTCLOCK?T)
+Error[122]  : Illegal opcode (PORTB)
+                      00348         SHIFTCLOCK?T    _CLK
+Warning[207]: Found label after column 1. (SHIFTMODE?C)
+Error[108]  : Illegal character (0)
+                      00349         SHIFTMODE?C     001h
+Warning[207]: Found label after column 1. (SHIFTOUT?BC)
+Error[122]  : Illegal opcode (_SAYI)
+MPASM  5.35               SAAT-ISI-LED(7).ASM   3-6-2023  16:01:34         PAGE 16
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+                      00350         SHIFTOUT?BC     _SAYI, 008h
+Warning[207]: Found label after column 1. (ICALL?L)
+Error[122]  : Illegal opcode (L00001)
+                      00351         ICALL?L L00001
+Warning[207]: Found label after column 1. (HIGH?T)
+Error[122]  : Illegal opcode (PORTB)
+                      00352         HIGH?T  _PORTB_4
+Warning[207]: Found label after column 1. (ICALL?L)
+Error[122]  : Illegal opcode (L00001)
+                      00353         ICALL?L L00001
+Warning[207]: Found label after column 1. (PAUSEUS?C)
+Error[108]  : Illegal character (0)
+                      00354         PAUSEUS?C       002h
+Warning[207]: Found label after column 1. (ICALL?L)
+Error[122]  : Illegal opcode (L00001)
+                      00355         ICALL?L L00001
+Warning[207]: Found label after column 1. (LOW?T)
+Error[122]  : Illegal opcode (PORTB)
+                      00356         LOW?T   _PORTB_4
+Warning[207]: Found label after column 1. (ICALL?L)
+Error[122]  : Illegal opcode (L00001)
+                      00357         ICALL?L L00001
+Warning[207]: Found label after column 1. (DIG?WCW)
+Error[122]  : Illegal opcode (_ISI)
+                      00358         DIG?WCW _ISI, 000h, _X
+Warning[207]: Found label after column 1. (ICALL?L)
+Error[122]  : Illegal opcode (L00001)
+                      00359         ICALL?L L00001
+Warning[207]: Found label after column 1. (GOSUB?L)
+Error[122]  : Illegal opcode (_AL)
+                      00360         GOSUB?L _AL
+Warning[207]: Found label after column 1. (ICALL?L)
+Error[122]  : Illegal opcode (L00001)
+                      00361         ICALL?L L00001
+Warning[207]: Found label after column 1. (SHIFTDATA?T)
+Error[122]  : Illegal opcode (PORTB)
+                      00362         SHIFTDATA?T     _DTA
+Warning[207]: Found label after column 1. (SHIFTCLOCK?T)
+Error[122]  : Illegal opcode (PORTB)
+                      00363         SHIFTCLOCK?T    _CLK
+Warning[207]: Found label after column 1. (SHIFTMODE?C)
+Error[108]  : Illegal character (0)
+                      00364         SHIFTMODE?C     001h
+Warning[207]: Found label after column 1. (SHIFTOUT?BC)
+Error[122]  : Illegal opcode (_SAYI)
+                      00365         SHIFTOUT?BC     _SAYI, 008h
+Warning[207]: Found label after column 1. (ICALL?L)
+Error[122]  : Illegal opcode (L00001)
+                      00366         ICALL?L L00001
+Warning[207]: Found label after column 1. (HIGH?T)
+Error[122]  : Illegal opcode (PORTB)
+                      00367         HIGH?T  _PORTB_5
+Warning[207]: Found label after column 1. (ICALL?L)
+MPASM  5.35               SAAT-ISI-LED(7).ASM   3-6-2023  16:01:34         PAGE 17
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+Error[122]  : Illegal opcode (L00001)
+                      00368         ICALL?L L00001
+Warning[207]: Found label after column 1. (PAUSEUS?C)
+Error[108]  : Illegal character (0)
+                      00369         PAUSEUS?C       002h
+Warning[207]: Found label after column 1. (ICALL?L)
+Error[122]  : Illegal opcode (L00001)
+                      00370         ICALL?L L00001
+Warning[207]: Found label after column 1. (LOW?T)
+Error[122]  : Illegal opcode (PORTB)
+                      00371         LOW?T   _PORTB_5
+Warning[207]: Found label after column 1. (ICALL?L)
+Error[122]  : Illegal opcode (L00001)
+                      00372         ICALL?L L00001
+Warning[207]: Found label after column 1. (MOVE?CW)
+Error[108]  : Illegal character (0)
+                      00373         MOVE?CW 00Ah, _X
+Warning[207]: Found label after column 1. (ICALL?L)
+Error[122]  : Illegal opcode (L00001)
+                      00374         ICALL?L L00001
+Warning[207]: Found label after column 1. (GOSUB?L)
+Error[122]  : Illegal opcode (_AL)
+                      00375         GOSUB?L _AL
+Warning[207]: Found label after column 1. (ICALL?L)
+Error[122]  : Illegal opcode (L00001)
+                      00376         ICALL?L L00001
+Warning[207]: Found label after column 1. (SHIFTDATA?T)
+Error[122]  : Illegal opcode (PORTB)
+                      00377         SHIFTDATA?T     _DTA
+Warning[207]: Found label after column 1. (SHIFTCLOCK?T)
+Error[122]  : Illegal opcode (PORTB)
+                      00378         SHIFTCLOCK?T    _CLK
+Warning[207]: Found label after column 1. (SHIFTMODE?C)
+Error[108]  : Illegal character (0)
+                      00379         SHIFTMODE?C     001h
+Warning[207]: Found label after column 1. (SHIFTOUT?BC)
+Error[122]  : Illegal opcode (_SAYI)
+                      00380         SHIFTOUT?BC     _SAYI, 008h
+Warning[207]: Found label after column 1. (ICALL?L)
+Error[122]  : Illegal opcode (L00001)
+                      00381         ICALL?L L00001
+Warning[207]: Found label after column 1. (HIGH?T)
+Error[122]  : Illegal opcode (PORTB)
+                      00382         HIGH?T  _PORTB_6
+Warning[207]: Found label after column 1. (ICALL?L)
+Error[122]  : Illegal opcode (L00001)
+                      00383         ICALL?L L00001
+Warning[207]: Found label after column 1. (PAUSEUS?C)
+Error[108]  : Illegal character (0)
+                      00384         PAUSEUS?C       002h
+Warning[207]: Found label after column 1. (ICALL?L)
+Error[122]  : Illegal opcode (L00001)
+                      00385         ICALL?L L00001
+MPASM  5.35               SAAT-ISI-LED(7).ASM   3-6-2023  16:01:34         PAGE 18
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+Warning[207]: Found label after column 1. (LOW?T)
+Error[122]  : Illegal opcode (PORTB)
+                      00386         LOW?T   _PORTB_6
+Warning[207]: Found label after column 1. (ICALL?L)
+Error[122]  : Illegal opcode (L00001)
+                      00387         ICALL?L L00001
+Warning[207]: Found label after column 1. (MOVE?CW)
+Error[108]  : Illegal character (0)
+                      00388         MOVE?CW 00Bh, _X
+Warning[207]: Found label after column 1. (ICALL?L)
+Error[122]  : Illegal opcode (L00001)
+                      00389         ICALL?L L00001
+Warning[207]: Found label after column 1. (GOSUB?L)
+Error[122]  : Illegal opcode (_AL)
+                      00390         GOSUB?L _AL
+Warning[207]: Found label after column 1. (ICALL?L)
+Error[122]  : Illegal opcode (L00001)
+                      00391         ICALL?L L00001
+Warning[207]: Found label after column 1. (SHIFTDATA?T)
+Error[122]  : Illegal opcode (PORTB)
+                      00392         SHIFTDATA?T     _DTA
+Warning[207]: Found label after column 1. (SHIFTCLOCK?T)
+Error[122]  : Illegal opcode (PORTB)
+                      00393         SHIFTCLOCK?T    _CLK
+Warning[207]: Found label after column 1. (SHIFTMODE?C)
+Error[108]  : Illegal character (0)
+                      00394         SHIFTMODE?C     001h
+Warning[207]: Found label after column 1. (SHIFTOUT?BC)
+Error[122]  : Illegal opcode (_SAYI)
+                      00395         SHIFTOUT?BC     _SAYI, 008h
+Warning[207]: Found label after column 1. (ICALL?L)
+Error[122]  : Illegal opcode (L00001)
+                      00396         ICALL?L L00001
+Warning[207]: Found label after column 1. (HIGH?T)
+Error[122]  : Illegal opcode (PORTB)
+                      00397         HIGH?T  _PORTB_7
+Warning[207]: Found label after column 1. (ICALL?L)
+Error[122]  : Illegal opcode (L00001)
+                      00398         ICALL?L L00001
+Warning[207]: Found label after column 1. (PAUSEUS?C)
+Error[108]  : Illegal character (0)
+                      00399         PAUSEUS?C       002h
+Warning[207]: Found label after column 1. (ICALL?L)
+Error[122]  : Illegal opcode (L00001)
+                      00400         ICALL?L L00001
+Warning[207]: Found label after column 1. (LOW?T)
+Error[122]  : Illegal opcode (PORTB)
+                      00401         LOW?T   _PORTB_7
+Warning[207]: Found label after column 1. (ICALL?L)
+Error[122]  : Illegal opcode (L00001)
+                      00402         ICALL?L L00001
+Warning[207]: Found label after column 1. (RETURN?)
+0000                  00403         RETURN? 
+MPASM  5.35               SAAT-ISI-LED(7).ASM   3-6-2023  16:01:34         PAGE 19
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+                      00404 
+Warning[207]: Found label after column 1. (LABEL?L)
+Error[122]  : Illegal opcode (_EKRAN2)
+                      00405         LABEL?L _EKRAN2 
+Warning[207]: Found label after column 1. (ICALL?L)
+Error[122]  : Illegal opcode (L00001)
+                      00406         ICALL?L L00001
+Warning[207]: Found label after column 1. (CMPNE?TCL)
+Error[122]  : Illegal opcode (PB01)
+                      00407         CMPNE?TCL       _POZ, 000h, L00015
+Warning[207]: Found label after column 1. (HIGH?T)
+Error[122]  : Illegal opcode (PORTA)
+                      00408         HIGH?T  _PORTA_3
+Warning[207]: Found label after column 1. (LABEL?L)
+Error[122]  : Illegal opcode (L00015)
+                      00409         LABEL?L L00015  
+Warning[207]: Found label after column 1. (ICALL?L)
+Error[122]  : Illegal opcode (L00001)
+                      00410         ICALL?L L00001
+Warning[207]: Found label after column 1. (DIG?BCW)
+Error[122]  : Illegal opcode (_GUN)
+                      00411         DIG?BCW _GUN, 001h, _X
+Warning[207]: Found label after column 1. (ICALL?L)
+Error[122]  : Illegal opcode (L00001)
+                      00412         ICALL?L L00001
+Warning[207]: Found label after column 1. (GOSUB?L)
+Error[122]  : Illegal opcode (_AL)
+                      00413         GOSUB?L _AL
+Warning[207]: Found label after column 1. (ICALL?L)
+Error[122]  : Illegal opcode (L00001)
+                      00414         ICALL?L L00001
+Warning[207]: Found label after column 1. (SHIFTDATA?T)
+Error[122]  : Illegal opcode (PORTB)
+                      00415         SHIFTDATA?T     _DTA
+Warning[207]: Found label after column 1. (SHIFTCLOCK?T)
+Error[122]  : Illegal opcode (PORTB)
+                      00416         SHIFTCLOCK?T    _CLK
+Warning[207]: Found label after column 1. (SHIFTMODE?C)
+Error[108]  : Illegal character (0)
+                      00417         SHIFTMODE?C     001h
+Warning[207]: Found label after column 1. (SHIFTOUT?BC)
+Error[122]  : Illegal opcode (_SAYI)
+                      00418         SHIFTOUT?BC     _SAYI, 008h
+Warning[207]: Found label after column 1. (ICALL?L)
+Error[122]  : Illegal opcode (L00001)
+                      00419         ICALL?L L00001
+Warning[207]: Found label after column 1. (HIGH?T)
+Error[122]  : Illegal opcode (PORTB)
+                      00420         HIGH?T  _PORTB_2
+Warning[207]: Found label after column 1. (ICALL?L)
+Error[122]  : Illegal opcode (L00001)
+                      00421         ICALL?L L00001
+Warning[207]: Found label after column 1. (PAUSEUS?C)
+MPASM  5.35               SAAT-ISI-LED(7).ASM   3-6-2023  16:01:34         PAGE 20
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+Error[108]  : Illegal character (0)
+                      00422         PAUSEUS?C       002h
+Warning[207]: Found label after column 1. (ICALL?L)
+Error[122]  : Illegal opcode (L00001)
+                      00423         ICALL?L L00001
+Warning[207]: Found label after column 1. (LOW?T)
+Error[122]  : Illegal opcode (PORTB)
+                      00424         LOW?T   _PORTB_2
+Warning[207]: Found label after column 1. (ICALL?L)
+Error[122]  : Illegal opcode (L00001)
+                      00425         ICALL?L L00001
+Warning[207]: Found label after column 1. (DIG?BCW)
+Error[122]  : Illegal opcode (_GUN)
+                      00426         DIG?BCW _GUN, 000h, _X
+Warning[207]: Found label after column 1. (ICALL?L)
+Error[122]  : Illegal opcode (L00001)
+                      00427         ICALL?L L00001
+Warning[207]: Found label after column 1. (GOSUB?L)
+Error[122]  : Illegal opcode (_AL)
+                      00428         GOSUB?L _AL
+Warning[207]: Found label after column 1. (ICALL?L)
+Error[122]  : Illegal opcode (L00001)
+                      00429         ICALL?L L00001
+Warning[207]: Found label after column 1. (SHIFTDATA?T)
+Error[122]  : Illegal opcode (PORTB)
+                      00430         SHIFTDATA?T     _DTA
+Warning[207]: Found label after column 1. (SHIFTCLOCK?T)
+Error[122]  : Illegal opcode (PORTB)
+                      00431         SHIFTCLOCK?T    _CLK
+Warning[207]: Found label after column 1. (SHIFTMODE?C)
+Error[108]  : Illegal character (0)
+                      00432         SHIFTMODE?C     001h
+Warning[207]: Found label after column 1. (SHIFTOUT?BC)
+Error[122]  : Illegal opcode (_SAYI)
+                      00433         SHIFTOUT?BC     _SAYI, 008h
+Warning[207]: Found label after column 1. (ICALL?L)
+Error[122]  : Illegal opcode (L00001)
+                      00434         ICALL?L L00001
+Warning[207]: Found label after column 1. (HIGH?T)
+Error[122]  : Illegal opcode (PORTB)
+                      00435         HIGH?T  _PORTB_3
+Warning[207]: Found label after column 1. (ICALL?L)
+Error[122]  : Illegal opcode (L00001)
+                      00436         ICALL?L L00001
+Warning[207]: Found label after column 1. (PAUSEUS?C)
+Error[108]  : Illegal character (0)
+                      00437         PAUSEUS?C       002h
+Warning[207]: Found label after column 1. (ICALL?L)
+Error[122]  : Illegal opcode (L00001)
+                      00438         ICALL?L L00001
+Warning[207]: Found label after column 1. (LOW?T)
+Error[122]  : Illegal opcode (PORTB)
+                      00439         LOW?T   _PORTB_3
+MPASM  5.35               SAAT-ISI-LED(7).ASM   3-6-2023  16:01:34         PAGE 21
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+Warning[207]: Found label after column 1. (ICALL?L)
+Error[122]  : Illegal opcode (L00001)
+                      00440         ICALL?L L00001
+Warning[207]: Found label after column 1. (DIG?BCW)
+Error[122]  : Illegal opcode (_AY)
+                      00441         DIG?BCW _AY, 001h, _X
+Warning[207]: Found label after column 1. (ICALL?L)
+Error[122]  : Illegal opcode (L00001)
+                      00442         ICALL?L L00001
+Warning[207]: Found label after column 1. (GOSUB?L)
+Error[122]  : Illegal opcode (_AL)
+                      00443         GOSUB?L _AL
+Warning[207]: Found label after column 1. (ICALL?L)
+Error[122]  : Illegal opcode (L00001)
+                      00444         ICALL?L L00001
+Warning[207]: Found label after column 1. (SHIFTDATA?T)
+Error[122]  : Illegal opcode (PORTB)
+                      00445         SHIFTDATA?T     _DTA
+Warning[207]: Found label after column 1. (SHIFTCLOCK?T)
+Error[122]  : Illegal opcode (PORTB)
+                      00446         SHIFTCLOCK?T    _CLK
+Warning[207]: Found label after column 1. (SHIFTMODE?C)
+Error[108]  : Illegal character (0)
+                      00447         SHIFTMODE?C     001h
+Warning[207]: Found label after column 1. (SHIFTOUT?BC)
+Error[122]  : Illegal opcode (_SAYI)
+                      00448         SHIFTOUT?BC     _SAYI, 008h
+Warning[207]: Found label after column 1. (ICALL?L)
+Error[122]  : Illegal opcode (L00001)
+                      00449         ICALL?L L00001
+Warning[207]: Found label after column 1. (HIGH?T)
+Error[122]  : Illegal opcode (PORTB)
+                      00450         HIGH?T  _PORTB_4
+Warning[207]: Found label after column 1. (ICALL?L)
+Error[122]  : Illegal opcode (L00001)
+                      00451         ICALL?L L00001
+Warning[207]: Found label after column 1. (PAUSEUS?C)
+Error[108]  : Illegal character (0)
+                      00452         PAUSEUS?C       002h
+Warning[207]: Found label after column 1. (ICALL?L)
+Error[122]  : Illegal opcode (L00001)
+                      00453         ICALL?L L00001
+Warning[207]: Found label after column 1. (LOW?T)
+Error[122]  : Illegal opcode (PORTB)
+                      00454         LOW?T   _PORTB_4
+Warning[207]: Found label after column 1. (ICALL?L)
+Error[122]  : Illegal opcode (L00001)
+                      00455         ICALL?L L00001
+Warning[207]: Found label after column 1. (DIG?BCW)
+Error[122]  : Illegal opcode (_AY)
+                      00456         DIG?BCW _AY, 000h, _X
+Warning[207]: Found label after column 1. (ICALL?L)
+Error[122]  : Illegal opcode (L00001)
+MPASM  5.35               SAAT-ISI-LED(7).ASM   3-6-2023  16:01:34         PAGE 22
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+                      00457         ICALL?L L00001
+Warning[207]: Found label after column 1. (GOSUB?L)
+Error[122]  : Illegal opcode (_AL)
+                      00458         GOSUB?L _AL
+Warning[207]: Found label after column 1. (ICALL?L)
+Error[122]  : Illegal opcode (L00001)
+                      00459         ICALL?L L00001
+Warning[207]: Found label after column 1. (SHIFTDATA?T)
+Error[122]  : Illegal opcode (PORTB)
+                      00460         SHIFTDATA?T     _DTA
+Warning[207]: Found label after column 1. (SHIFTCLOCK?T)
+Error[122]  : Illegal opcode (PORTB)
+                      00461         SHIFTCLOCK?T    _CLK
+Warning[207]: Found label after column 1. (SHIFTMODE?C)
+Error[108]  : Illegal character (0)
+                      00462         SHIFTMODE?C     001h
+Warning[207]: Found label after column 1. (SHIFTOUT?BC)
+Error[122]  : Illegal opcode (_SAYI)
+                      00463         SHIFTOUT?BC     _SAYI, 008h
+Warning[207]: Found label after column 1. (ICALL?L)
+Error[122]  : Illegal opcode (L00001)
+                      00464         ICALL?L L00001
+Warning[207]: Found label after column 1. (HIGH?T)
+Error[122]  : Illegal opcode (PORTB)
+                      00465         HIGH?T  _PORTB_5
+Warning[207]: Found label after column 1. (ICALL?L)
+Error[122]  : Illegal opcode (L00001)
+                      00466         ICALL?L L00001
+Warning[207]: Found label after column 1. (PAUSEUS?C)
+Error[108]  : Illegal character (0)
+                      00467         PAUSEUS?C       002h
+Warning[207]: Found label after column 1. (ICALL?L)
+Error[122]  : Illegal opcode (L00001)
+                      00468         ICALL?L L00001
+Warning[207]: Found label after column 1. (LOW?T)
+Error[122]  : Illegal opcode (PORTB)
+                      00469         LOW?T   _PORTB_5
+Warning[207]: Found label after column 1. (ICALL?L)
+Error[122]  : Illegal opcode (L00001)
+                      00470         ICALL?L L00001
+Warning[207]: Found label after column 1. (DIG?BCW)
+Error[122]  : Illegal opcode (_YIL)
+                      00471         DIG?BCW _YIL, 001h, _X
+Warning[207]: Found label after column 1. (ICALL?L)
+Error[122]  : Illegal opcode (L00001)
+                      00472         ICALL?L L00001
+Warning[207]: Found label after column 1. (GOSUB?L)
+Error[122]  : Illegal opcode (_AL)
+                      00473         GOSUB?L _AL
+Warning[207]: Found label after column 1. (ICALL?L)
+Error[122]  : Illegal opcode (L00001)
+                      00474         ICALL?L L00001
+Warning[207]: Found label after column 1. (SHIFTDATA?T)
+MPASM  5.35               SAAT-ISI-LED(7).ASM   3-6-2023  16:01:34         PAGE 23
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+Error[122]  : Illegal opcode (PORTB)
+                      00475         SHIFTDATA?T     _DTA
+Warning[207]: Found label after column 1. (SHIFTCLOCK?T)
+Error[122]  : Illegal opcode (PORTB)
+                      00476         SHIFTCLOCK?T    _CLK
+Warning[207]: Found label after column 1. (SHIFTMODE?C)
+Error[108]  : Illegal character (0)
+                      00477         SHIFTMODE?C     001h
+Warning[207]: Found label after column 1. (SHIFTOUT?BC)
+Error[122]  : Illegal opcode (_SAYI)
+                      00478         SHIFTOUT?BC     _SAYI, 008h
+Warning[207]: Found label after column 1. (ICALL?L)
+Error[122]  : Illegal opcode (L00001)
+                      00479         ICALL?L L00001
+Warning[207]: Found label after column 1. (HIGH?T)
+Error[122]  : Illegal opcode (PORTB)
+                      00480         HIGH?T  _PORTB_6
+Warning[207]: Found label after column 1. (ICALL?L)
+Error[122]  : Illegal opcode (L00001)
+                      00481         ICALL?L L00001
+Warning[207]: Found label after column 1. (PAUSEUS?C)
+Error[108]  : Illegal character (0)
+                      00482         PAUSEUS?C       002h
+Warning[207]: Found label after column 1. (ICALL?L)
+Error[122]  : Illegal opcode (L00001)
+                      00483         ICALL?L L00001
+Warning[207]: Found label after column 1. (LOW?T)
+Error[122]  : Illegal opcode (PORTB)
+                      00484         LOW?T   _PORTB_6
+Warning[207]: Found label after column 1. (ICALL?L)
+Error[122]  : Illegal opcode (L00001)
+                      00485         ICALL?L L00001
+Warning[207]: Found label after column 1. (DIG?BCW)
+Error[122]  : Illegal opcode (_YIL)
+                      00486         DIG?BCW _YIL, 000h, _X
+Warning[207]: Found label after column 1. (ICALL?L)
+Error[122]  : Illegal opcode (L00001)
+                      00487         ICALL?L L00001
+Warning[207]: Found label after column 1. (GOSUB?L)
+Error[122]  : Illegal opcode (_AL)
+                      00488         GOSUB?L _AL
+Warning[207]: Found label after column 1. (ICALL?L)
+Error[122]  : Illegal opcode (L00001)
+                      00489         ICALL?L L00001
+Warning[207]: Found label after column 1. (SHIFTDATA?T)
+Error[122]  : Illegal opcode (PORTB)
+                      00490         SHIFTDATA?T     _DTA
+Warning[207]: Found label after column 1. (SHIFTCLOCK?T)
+Error[122]  : Illegal opcode (PORTB)
+                      00491         SHIFTCLOCK?T    _CLK
+Warning[207]: Found label after column 1. (SHIFTMODE?C)
+Error[108]  : Illegal character (0)
+                      00492         SHIFTMODE?C     001h
+MPASM  5.35               SAAT-ISI-LED(7).ASM   3-6-2023  16:01:34         PAGE 24
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+Warning[207]: Found label after column 1. (SHIFTOUT?BC)
+Error[122]  : Illegal opcode (_SAYI)
+                      00493         SHIFTOUT?BC     _SAYI, 008h
+Warning[207]: Found label after column 1. (ICALL?L)
+Error[122]  : Illegal opcode (L00001)
+                      00494         ICALL?L L00001
+Warning[207]: Found label after column 1. (HIGH?T)
+Error[122]  : Illegal opcode (PORTB)
+                      00495         HIGH?T  _PORTB_7
+Warning[207]: Found label after column 1. (ICALL?L)
+Error[122]  : Illegal opcode (L00001)
+                      00496         ICALL?L L00001
+Warning[207]: Found label after column 1. (PAUSEUS?C)
+Error[108]  : Illegal character (0)
+                      00497         PAUSEUS?C       002h
+Warning[207]: Found label after column 1. (ICALL?L)
+Error[122]  : Illegal opcode (L00001)
+                      00498         ICALL?L L00001
+Warning[207]: Found label after column 1. (LOW?T)
+Error[122]  : Illegal opcode (PORTB)
+                      00499         LOW?T   _PORTB_7
+Warning[207]: Found label after column 1. (ICALL?L)
+Error[122]  : Illegal opcode (L00001)
+                      00500         ICALL?L L00001
+Warning[207]: Found label after column 1. (RETURN?)
+0000                  00501         RETURN? 
+                      00502 
+Warning[207]: Found label after column 1. (LABEL?L)
+Error[122]  : Illegal opcode (_AYAR)
+                      00503         LABEL?L _AYAR   
+Warning[207]: Found label after column 1. (ICALL?L)
+Error[122]  : Illegal opcode (L00001)
+                      00504         ICALL?L L00001
+Warning[207]: Found label after column 1. (LOW?T)
+Error[122]  : Illegal opcode (PORTA)
+                      00505         LOW?T   _PORTA_3
+Warning[207]: Found label after column 1. (ICALL?L)
+Error[122]  : Illegal opcode (L00001)
+                      00506         ICALL?L L00001
+Warning[207]: Found label after column 1. (MOVE?CB)
+Error[108]  : Illegal character (0)
+                      00507         MOVE?CB 000h, _SN
+Warning[207]: Found label after column 1. (ICALL?L)
+Error[122]  : Illegal opcode (L00001)
+                      00508         ICALL?L L00001
+Warning[207]: Found label after column 1. (MOVE?CT)
+Error[108]  : Illegal character (0)
+                      00509         MOVE?CT 001h, _POZ
+Warning[207]: Found label after column 1. (ICALL?L)
+Error[122]  : Illegal opcode (L00001)
+                      00510         ICALL?L L00001
+Warning[207]: Found label after column 1. (GOSUB?L)
+Error[122]  : Illegal opcode (_FLASH)
+MPASM  5.35               SAAT-ISI-LED(7).ASM   3-6-2023  16:01:34         PAGE 25
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+                      00511         GOSUB?L _FLASH
+Warning[207]: Found label after column 1. (ICALL?L)
+Error[122]  : Illegal opcode (L00001)
+                      00512         ICALL?L L00001
+Warning[207]: Found label after column 1. (CMPGT?BCL)
+Error[122]  : Illegal opcode (_Y)
+                      00513         CMPGT?BCL       _Y, 00Ah, _TARIHAYAR
+Warning[207]: Found label after column 1. (ICALL?L)
+Error[122]  : Illegal opcode (L00001)
+                      00514         ICALL?L L00001
+Warning[207]: Found label after column 1. (LABEL?L)
+Error[122]  : Illegal opcode (L00017)
+                      00515         LABEL?L L00017  
+Warning[207]: Found label after column 1. (CMPNE?TCL)
+Error[122]  : Illegal opcode (PORTA)
+                      00516         CMPNE?TCL       _SEC, 000h, L00018
+Warning[207]: Found label after column 1. (ICALL?L)
+Error[122]  : Illegal opcode (L00001)
+                      00517         ICALL?L L00001
+Warning[207]: Found label after column 1. (GOTO?L)
+Error[122]  : Illegal opcode (L00017)
+                      00518         GOTO?L  L00017
+Warning[207]: Found label after column 1. (LABEL?L)
+Error[122]  : Illegal opcode (L00018)
+                      00519         LABEL?L L00018  
+                      00520 
+Warning[207]: Found label after column 1. (LABEL?L)
+Error[122]  : Illegal opcode (_HOUR)
+                      00521         LABEL?L _HOUR   
+Warning[207]: Found label after column 1. (ICALL?L)
+Error[122]  : Illegal opcode (L00001)
+                      00522         ICALL?L L00001
+Warning[207]: Found label after column 1. (GOSUB?L)
+Error[122]  : Illegal opcode (_EKRAN0)
+                      00523         GOSUB?L _EKRAN0
+Warning[207]: Found label after column 1. (ICALL?L)
+Error[122]  : Illegal opcode (L00001)
+                      00524         ICALL?L L00001
+Warning[207]: Found label after column 1. (LOW?T)
+Error[122]  : Illegal opcode (PORTA)
+                      00525         LOW?T   _PORTA_3
+Warning[207]: Found label after column 1. (ICALL?L)
+Error[122]  : Illegal opcode (L00001)
+                      00526         ICALL?L L00001
+Warning[207]: Found label after column 1. (CMPEQ?TCL)
+Error[122]  : Illegal opcode (PORTA)
+                      00527         CMPEQ?TCL       _SEC, 000h, _MINBIR
+Warning[207]: Found label after column 1. (ICALL?L)
+Error[122]  : Illegal opcode (L00001)
+                      00528         ICALL?L L00001
+Warning[207]: Found label after column 1. (CMPNE?TCL)
+Error[122]  : Illegal opcode (PORTA)
+                      00529         CMPNE?TCL       _YUKARI, 000h, L00019
+MPASM  5.35               SAAT-ISI-LED(7).ASM   3-6-2023  16:01:34         PAGE 26
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+Warning[207]: Found label after column 1. (ICALL?L)
+Error[122]  : Illegal opcode (L00001)
+                      00530         ICALL?L L00001
+Warning[207]: Found label after column 1. (ADD?BCB)
+Error[122]  : Illegal opcode (_SAAT)
+                      00531         ADD?BCB _SAAT, 001h, _SAAT
+Warning[207]: Found label after column 1. (ICALL?L)
+Error[122]  : Illegal opcode (L00001)
+                      00532         ICALL?L L00001
+Warning[207]: Found label after column 1. (CMPNE?BCL)
+Error[122]  : Illegal opcode (_SAAT)
+                      00533         CMPNE?BCL       _SAAT, 018h, L00021
+Warning[207]: Found label after column 1. (MOVE?CB)
+Error[108]  : Illegal character (0)
+                      00534         MOVE?CB 000h, _SAAT
+Warning[207]: Found label after column 1. (LABEL?L)
+Error[122]  : Illegal opcode (L00021)
+                      00535         LABEL?L L00021  
+Warning[207]: Found label after column 1. (ICALL?L)
+Error[122]  : Illegal opcode (L00001)
+                      00536         ICALL?L L00001
+Warning[207]: Found label after column 1. (LABEL?L)
+Error[122]  : Illegal opcode (L00019)
+                      00537         LABEL?L L00019  
+Warning[207]: Found label after column 1. (ICALL?L)
+Error[122]  : Illegal opcode (L00001)
+                      00538         ICALL?L L00001
+Warning[207]: Found label after column 1. (CMPNE?TCL)
+Error[122]  : Illegal opcode (PORTA)
+                      00539         CMPNE?TCL       _ASAGI, 000h, L00023
+Warning[207]: Found label after column 1. (ICALL?L)
+Error[122]  : Illegal opcode (L00001)
+                      00540         ICALL?L L00001
+Warning[207]: Found label after column 1. (SUB?BCB)
+Error[122]  : Illegal opcode (_SAAT)
+                      00541         SUB?BCB _SAAT, 001h, _SAAT
+Warning[207]: Found label after column 1. (ICALL?L)
+Error[122]  : Illegal opcode (L00001)
+                      00542         ICALL?L L00001
+Warning[207]: Found label after column 1. (CMPNE?BCL)
+Error[122]  : Illegal opcode (_SAAT)
+                      00543         CMPNE?BCL       _SAAT, 0FFh, L00025
+Warning[207]: Found label after column 1. (MOVE?CB)
+Error[108]  : Illegal character (0)
+                      00544         MOVE?CB 017h, _SAAT
+Warning[207]: Found label after column 1. (LABEL?L)
+Error[122]  : Illegal opcode (L00025)
+                      00545         LABEL?L L00025  
+Warning[207]: Found label after column 1. (ICALL?L)
+Error[122]  : Illegal opcode (L00001)
+                      00546         ICALL?L L00001
+Warning[207]: Found label after column 1. (LABEL?L)
+Error[122]  : Illegal opcode (L00023)
+MPASM  5.35               SAAT-ISI-LED(7).ASM   3-6-2023  16:01:34         PAGE 27
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+                      00547         LABEL?L L00023  
+Warning[207]: Found label after column 1. (ICALL?L)
+Error[122]  : Illegal opcode (L00001)
+                      00548         ICALL?L L00001
+Warning[207]: Found label after column 1. (GOSUB?L)
+Error[122]  : Illegal opcode (_GECIKME)
+                      00549         GOSUB?L _GECIKME
+Warning[207]: Found label after column 1. (ICALL?L)
+Error[122]  : Illegal opcode (L00001)
+                      00550         ICALL?L L00001
+Warning[207]: Found label after column 1. (GOTO?L)
+Error[122]  : Illegal opcode (_HOUR)
+                      00551         GOTO?L  _HOUR
+                      00552 
+Warning[207]: Found label after column 1. (LABEL?L)
+Error[122]  : Illegal opcode (_MINBIR)
+                      00553         LABEL?L _MINBIR 
+Warning[207]: Found label after column 1. (ICALL?L)
+Error[122]  : Illegal opcode (L00001)
+                      00554         ICALL?L L00001
+Warning[207]: Found label after column 1. (GOSUB?L)
+Error[122]  : Illegal opcode (_FLASH)
+                      00555         GOSUB?L _FLASH
+Warning[207]: Found label after column 1. (ICALL?L)
+Error[122]  : Illegal opcode (L00001)
+                      00556         ICALL?L L00001
+Warning[207]: Found label after column 1. (LABEL?L)
+Error[122]  : Illegal opcode (L00027)
+                      00557         LABEL?L L00027  
+Warning[207]: Found label after column 1. (CMPNE?TCL)
+Error[122]  : Illegal opcode (PORTA)
+                      00558         CMPNE?TCL       _SEC, 000h, L00028
+Warning[207]: Found label after column 1. (ICALL?L)
+Error[122]  : Illegal opcode (L00001)
+                      00559         ICALL?L L00001
+Warning[207]: Found label after column 1. (GOTO?L)
+Error[122]  : Illegal opcode (L00027)
+                      00560         GOTO?L  L00027
+Warning[207]: Found label after column 1. (LABEL?L)
+Error[122]  : Illegal opcode (L00028)
+                      00561         LABEL?L L00028  
+                      00562 
+Warning[207]: Found label after column 1. (LABEL?L)
+Error[122]  : Illegal opcode (_MINUTE)
+                      00563         LABEL?L _MINUTE 
+Warning[207]: Found label after column 1. (ICALL?L)
+Error[122]  : Illegal opcode (L00001)
+                      00564         ICALL?L L00001
+Warning[207]: Found label after column 1. (GOSUB?L)
+Error[122]  : Illegal opcode (_EKRAN0)
+                      00565         GOSUB?L _EKRAN0
+Warning[207]: Found label after column 1. (ICALL?L)
+Error[122]  : Illegal opcode (L00001)
+MPASM  5.35               SAAT-ISI-LED(7).ASM   3-6-2023  16:01:34         PAGE 28
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+                      00566         ICALL?L L00001
+Warning[207]: Found label after column 1. (LOW?T)
+Error[122]  : Illegal opcode (PORTA)
+                      00567         LOW?T   _PORTA_3
+Warning[207]: Found label after column 1. (ICALL?L)
+Error[122]  : Illegal opcode (L00001)
+                      00568         ICALL?L L00001
+Warning[207]: Found label after column 1. (CMPEQ?TCL)
+Error[122]  : Illegal opcode (PORTA)
+                      00569         CMPEQ?TCL       _SEC, 000h, _ara
+Warning[207]: Found label after column 1. (ICALL?L)
+Error[122]  : Illegal opcode (L00001)
+                      00570         ICALL?L L00001
+Warning[207]: Found label after column 1. (CMPNE?TCL)
+Error[122]  : Illegal opcode (PORTA)
+                      00571         CMPNE?TCL       _YUKARI, 000h, L00029
+Warning[207]: Found label after column 1. (ICALL?L)
+Error[122]  : Illegal opcode (L00001)
+                      00572         ICALL?L L00001
+Warning[207]: Found label after column 1. (ADD?BCB)
+Error[122]  : Illegal opcode (_DAK)
+                      00573         ADD?BCB _DAK, 001h, _DAK
+Warning[207]: Found label after column 1. (ICALL?L)
+Error[122]  : Illegal opcode (L00001)
+                      00574         ICALL?L L00001
+Warning[207]: Found label after column 1. (CMPNE?BCL)
+Error[122]  : Illegal opcode (_DAK)
+                      00575         CMPNE?BCL       _DAK, 03Ch, L00031
+Warning[207]: Found label after column 1. (MOVE?CB)
+Error[108]  : Illegal character (0)
+                      00576         MOVE?CB 000h, _DAK
+Warning[207]: Found label after column 1. (LABEL?L)
+Error[122]  : Illegal opcode (L00031)
+                      00577         LABEL?L L00031  
+Warning[207]: Found label after column 1. (ICALL?L)
+Error[122]  : Illegal opcode (L00001)
+                      00578         ICALL?L L00001
+Warning[207]: Found label after column 1. (LABEL?L)
+Error[122]  : Illegal opcode (L00029)
+                      00579         LABEL?L L00029  
+Warning[207]: Found label after column 1. (ICALL?L)
+Error[122]  : Illegal opcode (L00001)
+                      00580         ICALL?L L00001
+Warning[207]: Found label after column 1. (CMPNE?TCL)
+Error[122]  : Illegal opcode (PORTA)
+                      00581         CMPNE?TCL       _ASAGI, 000h, L00033
+Warning[207]: Found label after column 1. (ICALL?L)
+Error[122]  : Illegal opcode (L00001)
+                      00582         ICALL?L L00001
+Warning[207]: Found label after column 1. (SUB?BCB)
+Error[122]  : Illegal opcode (_DAK)
+                      00583         SUB?BCB _DAK, 001h, _DAK
+Warning[207]: Found label after column 1. (ICALL?L)
+MPASM  5.35               SAAT-ISI-LED(7).ASM   3-6-2023  16:01:34         PAGE 29
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+Error[122]  : Illegal opcode (L00001)
+                      00584         ICALL?L L00001
+Warning[207]: Found label after column 1. (CMPNE?BCL)
+Error[122]  : Illegal opcode (_DAK)
+                      00585         CMPNE?BCL       _DAK, 0FFh, L00035
+Warning[207]: Found label after column 1. (MOVE?CB)
+Error[108]  : Illegal character (0)
+                      00586         MOVE?CB 03Bh, _DAK
+Warning[207]: Found label after column 1. (LABEL?L)
+Error[122]  : Illegal opcode (L00035)
+                      00587         LABEL?L L00035  
+Warning[207]: Found label after column 1. (ICALL?L)
+Error[122]  : Illegal opcode (L00001)
+                      00588         ICALL?L L00001
+Warning[207]: Found label after column 1. (LABEL?L)
+Error[122]  : Illegal opcode (L00033)
+                      00589         LABEL?L L00033  
+Warning[207]: Found label after column 1. (ICALL?L)
+Error[122]  : Illegal opcode (L00001)
+                      00590         ICALL?L L00001
+Warning[207]: Found label after column 1. (GOSUB?L)
+Error[122]  : Illegal opcode (_GECIKME)
+                      00591         GOSUB?L _GECIKME
+Warning[207]: Found label after column 1. (ICALL?L)
+Error[122]  : Illegal opcode (L00001)
+                      00592         ICALL?L L00001
+Warning[207]: Found label after column 1. (GOTO?L)
+Error[122]  : Illegal opcode (_MINUTE)
+                      00593         GOTO?L  _MINUTE
+                      00594 
+Warning[207]: Found label after column 1. (LABEL?L)
+Error[122]  : Illegal opcode (_SECBIR)
+                      00595         LABEL?L _SECBIR 
+Warning[207]: Found label after column 1. (ICALL?L)
+Error[122]  : Illegal opcode (L00001)
+                      00596         ICALL?L L00001
+Warning[207]: Found label after column 1. (LABEL?L)
+Error[122]  : Illegal opcode (L00037)
+                      00597         LABEL?L L00037  
+Warning[207]: Found label after column 1. (CMPNE?TCL)
+Error[122]  : Illegal opcode (PORTA)
+                      00598         CMPNE?TCL       _SEC, 000h, L00038
+Warning[207]: Found label after column 1. (ICALL?L)
+Error[122]  : Illegal opcode (L00001)
+                      00599         ICALL?L L00001
+Warning[207]: Found label after column 1. (GOTO?L)
+Error[122]  : Illegal opcode (L00037)
+                      00600         GOTO?L  L00037
+Warning[207]: Found label after column 1. (LABEL?L)
+Error[122]  : Illegal opcode (L00038)
+                      00601         LABEL?L L00038  
+                      00602 
+Warning[207]: Found label after column 1. (LABEL?L)
+MPASM  5.35               SAAT-ISI-LED(7).ASM   3-6-2023  16:01:34         PAGE 30
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+Error[122]  : Illegal opcode (_GECIKME)
+                      00603         LABEL?L _GECIKME        
+Warning[207]: Found label after column 1. (ICALL?L)
+Error[122]  : Illegal opcode (L00001)
+                      00604         ICALL?L L00001
+Warning[207]: Found label after column 1. (MOVE?CW)
+Error[108]  : Illegal character (0)
+                      00605         MOVE?CW 000h, _X
+Warning[207]: Found label after column 1. (LABEL?L)
+Error[122]  : Illegal opcode (L00039)
+                      00606         LABEL?L L00039  
+Warning[207]: Found label after column 1. (CMPGT?WCL)
+Error[122]  : Illegal opcode (_X)
+                      00607         CMPGT?WCL       _X, 00708h, L00040
+Warning[207]: Found label after column 1. (ICALL?L)
+Error[122]  : Illegal opcode (L00001)
+                      00608         ICALL?L L00001
+Warning[207]: Found label after column 1. (PAUSEUS?C)
+Error[108]  : Illegal character (0)
+                      00609         PAUSEUS?C       032h
+Warning[207]: Found label after column 1. (ICALL?L)
+Error[122]  : Illegal opcode (L00001)
+                      00610         ICALL?L L00001
+Warning[207]: Found label after column 1. (NEXT?WCL)
+Error[122]  : Illegal opcode (_X)
+                      00611         NEXT?WCL        _X, 001h, L00039
+Warning[207]: Found label after column 1. (LABEL?L)
+Error[122]  : Illegal opcode (L00040)
+                      00612         LABEL?L L00040  
+Warning[207]: Found label after column 1. (ICALL?L)
+Error[122]  : Illegal opcode (L00001)
+                      00613         ICALL?L L00001
+Warning[207]: Found label after column 1. (RETURN?)
+0000                  00614         RETURN? 
+                      00615 
+Warning[207]: Found label after column 1. (LABEL?L)
+Error[122]  : Illegal opcode (_DELAY)
+                      00616         LABEL?L _DELAY  
+Warning[207]: Found label after column 1. (ICALL?L)
+Error[122]  : Illegal opcode (L00001)
+                      00617         ICALL?L L00001
+Warning[207]: Found label after column 1. (MOVE?CW)
+Error[108]  : Illegal character (0)
+                      00618         MOVE?CW 000h, _X
+Warning[207]: Found label after column 1. (LABEL?L)
+Error[122]  : Illegal opcode (L00041)
+                      00619         LABEL?L L00041  
+Warning[207]: Found label after column 1. (CMPGT?WCL)
+Error[122]  : Illegal opcode (_X)
+                      00620         CMPGT?WCL       _X, 0076Ch, L00042
+Warning[207]: Found label after column 1. (ICALL?L)
+Error[122]  : Illegal opcode (L00001)
+                      00621         ICALL?L L00001
+MPASM  5.35               SAAT-ISI-LED(7).ASM   3-6-2023  16:01:34         PAGE 31
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+Warning[207]: Found label after column 1. (PAUSEUS?C)
+Error[108]  : Illegal character (0)
+                      00622         PAUSEUS?C       00Ah
+Warning[207]: Found label after column 1. (ICALL?L)
+Error[122]  : Illegal opcode (L00001)
+                      00623         ICALL?L L00001
+Warning[207]: Found label after column 1. (NEXT?WCL)
+Error[122]  : Illegal opcode (_X)
+                      00624         NEXT?WCL        _X, 001h, L00041
+Warning[207]: Found label after column 1. (LABEL?L)
+Error[122]  : Illegal opcode (L00042)
+                      00625         LABEL?L L00042  
+Warning[207]: Found label after column 1. (ICALL?L)
+Error[122]  : Illegal opcode (L00001)
+                      00626         ICALL?L L00001
+Warning[207]: Found label after column 1. (RETURN?)
+0000                  00627         RETURN? 
+                      00628 
+Warning[207]: Found label after column 1. (LABEL?L)
+Error[122]  : Illegal opcode (_ara)
+                      00629         LABEL?L _ara    
+Warning[207]: Found label after column 1. (ICALL?L)
+Error[122]  : Illegal opcode (L00001)
+                      00630         ICALL?L L00001
+Warning[207]: Found label after column 1. (GOSUB?L)
+Error[122]  : Illegal opcode (_FLASH)
+                      00631         GOSUB?L _FLASH
+Warning[207]: Found label after column 1. (ICALL?L)
+Error[122]  : Illegal opcode (L00001)
+                      00632         ICALL?L L00001
+Warning[207]: Found label after column 1. (HIGH?T)
+Error[122]  : Illegal opcode (PORTA)
+                      00633         HIGH?T  _PORTA_3
+Warning[207]: Found label after column 1. (ICALL?L)
+Error[122]  : Illegal opcode (L00001)
+                      00634         ICALL?L L00001
+Warning[207]: Found label after column 1. (LABEL?L)
+Error[122]  : Illegal opcode (L00043)
+                      00635         LABEL?L L00043  
+Warning[207]: Found label after column 1. (CMPNE?TCL)
+Error[122]  : Illegal opcode (PORTA)
+                      00636         CMPNE?TCL       _SEC, 000h, L00044
+Warning[207]: Found label after column 1. (ICALL?L)
+Error[122]  : Illegal opcode (L00001)
+                      00637         ICALL?L L00001
+Warning[207]: Found label after column 1. (GOTO?L)
+Error[122]  : Illegal opcode (L00043)
+                      00638         GOTO?L  L00043
+Warning[207]: Found label after column 1. (LABEL?L)
+Error[122]  : Illegal opcode (L00044)
+                      00639         LABEL?L L00044  
+Warning[207]: Found label after column 1. (ICALL?L)
+Error[122]  : Illegal opcode (L00001)
+MPASM  5.35               SAAT-ISI-LED(7).ASM   3-6-2023  16:01:34         PAGE 32
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+                      00640         ICALL?L L00001
+Warning[207]: Found label after column 1. (MOVE?BB)
+Error[122]  : Illegal opcode (_SN)
+                      00641         MOVE?BB _SN, _MEM
+Warning[207]: Found label after column 1. (ICALL?L)
+Error[122]  : Illegal opcode (L00001)
+                      00642         ICALL?L L00001
+Warning[207]: Found label after column 1. (GOSUB?L)
+Error[122]  : Illegal opcode (_TERSCEVIR)
+                      00643         GOSUB?L _TERSCEVIR
+Warning[207]: Found label after column 1. (ICALL?L)
+Error[122]  : Illegal opcode (L00001)
+                      00644         ICALL?L L00001
+Warning[207]: Found label after column 1. (MOVE?BB)
+Error[122]  : Illegal opcode (_SAYI)
+                      00645         MOVE?BB _SAYI, _SN
+Warning[207]: Found label after column 1. (ICALL?L)
+Error[122]  : Illegal opcode (L00001)
+                      00646         ICALL?L L00001
+Warning[207]: Found label after column 1. (MOVE?BB)
+Error[122]  : Illegal opcode (_DAK)
+                      00647         MOVE?BB _DAK, _MEM
+Warning[207]: Found label after column 1. (ICALL?L)
+Error[122]  : Illegal opcode (L00001)
+                      00648         ICALL?L L00001
+Warning[207]: Found label after column 1. (GOSUB?L)
+Error[122]  : Illegal opcode (_TERSCEVIR)
+                      00649         GOSUB?L _TERSCEVIR
+Warning[207]: Found label after column 1. (ICALL?L)
+Error[122]  : Illegal opcode (L00001)
+                      00650         ICALL?L L00001
+Warning[207]: Found label after column 1. (MOVE?BB)
+Error[122]  : Illegal opcode (_SAYI)
+                      00651         MOVE?BB _SAYI, _DAK
+Warning[207]: Found label after column 1. (ICALL?L)
+Error[122]  : Illegal opcode (L00001)
+                      00652         ICALL?L L00001
+Warning[207]: Found label after column 1. (MOVE?BB)
+Error[122]  : Illegal opcode (_SAAT)
+                      00653         MOVE?BB _SAAT, _MEM
+Warning[207]: Found label after column 1. (ICALL?L)
+Error[122]  : Illegal opcode (L00001)
+                      00654         ICALL?L L00001
+Warning[207]: Found label after column 1. (GOSUB?L)
+Error[122]  : Illegal opcode (_TERSCEVIR)
+                      00655         GOSUB?L _TERSCEVIR
+Warning[207]: Found label after column 1. (ICALL?L)
+Error[122]  : Illegal opcode (L00001)
+                      00656         ICALL?L L00001
+Warning[207]: Found label after column 1. (MOVE?BB)
+Error[122]  : Illegal opcode (_SAYI)
+                      00657         MOVE?BB _SAYI, _SAAT
+Warning[207]: Found label after column 1. (ICALL?L)
+MPASM  5.35               SAAT-ISI-LED(7).ASM   3-6-2023  16:01:34         PAGE 33
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+Error[122]  : Illegal opcode (L00001)
+                      00658         ICALL?L L00001
+Warning[207]: Found label after column 1. (MOVE?BB)
+Error[122]  : Illegal opcode (_GUN)
+                      00659         MOVE?BB _GUN, _MEM
+Warning[207]: Found label after column 1. (ICALL?L)
+Error[122]  : Illegal opcode (L00001)
+                      00660         ICALL?L L00001
+Warning[207]: Found label after column 1. (GOSUB?L)
+Error[122]  : Illegal opcode (_TERSCEVIR)
+                      00661         GOSUB?L _TERSCEVIR
+Warning[207]: Found label after column 1. (ICALL?L)
+Error[122]  : Illegal opcode (L00001)
+                      00662         ICALL?L L00001
+Warning[207]: Found label after column 1. (MOVE?BB)
+Error[122]  : Illegal opcode (_SAYI)
+                      00663         MOVE?BB _SAYI, _GUN
+Warning[207]: Found label after column 1. (ICALL?L)
+Error[122]  : Illegal opcode (L00001)
+                      00664         ICALL?L L00001
+Warning[207]: Found label after column 1. (MOVE?BB)
+Error[122]  : Illegal opcode (_AY)
+                      00665         MOVE?BB _AY, _MEM
+Warning[207]: Found label after column 1. (ICALL?L)
+Error[122]  : Illegal opcode (L00001)
+                      00666         ICALL?L L00001
+Warning[207]: Found label after column 1. (GOSUB?L)
+Error[122]  : Illegal opcode (_TERSCEVIR)
+                      00667         GOSUB?L _TERSCEVIR
+Warning[207]: Found label after column 1. (ICALL?L)
+Error[122]  : Illegal opcode (L00001)
+                      00668         ICALL?L L00001
+Warning[207]: Found label after column 1. (MOVE?BB)
+Error[122]  : Illegal opcode (_SAYI)
+                      00669         MOVE?BB _SAYI, _AY
+Warning[207]: Found label after column 1. (ICALL?L)
+Error[122]  : Illegal opcode (L00001)
+                      00670         ICALL?L L00001
+Warning[207]: Found label after column 1. (MOVE?BB)
+Error[122]  : Illegal opcode (_YIL)
+                      00671         MOVE?BB _YIL, _MEM
+Warning[207]: Found label after column 1. (ICALL?L)
+Error[122]  : Illegal opcode (L00001)
+                      00672         ICALL?L L00001
+Warning[207]: Found label after column 1. (GOSUB?L)
+Error[122]  : Illegal opcode (_TERSCEVIR)
+                      00673         GOSUB?L _TERSCEVIR
+Warning[207]: Found label after column 1. (ICALL?L)
+Error[122]  : Illegal opcode (L00001)
+                      00674         ICALL?L L00001
+Warning[207]: Found label after column 1. (MOVE?BB)
+Error[122]  : Illegal opcode (_SAYI)
+                      00675         MOVE?BB _SAYI, _YIL
+MPASM  5.35               SAAT-ISI-LED(7).ASM   3-6-2023  16:01:34         PAGE 34
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+Warning[207]: Found label after column 1. (ICALL?L)
+Error[122]  : Illegal opcode (L00001)
+                      00676         ICALL?L L00001
+Warning[207]: Found label after column 1. (GOSUB?L)
+Error[122]  : Illegal opcode (_ZAMAN_YAZ)
+                      00677         GOSUB?L _ZAMAN_YAZ
+Warning[207]: Found label after column 1. (ICALL?L)
+Error[122]  : Illegal opcode (L00001)
+                      00678         ICALL?L L00001
+Warning[207]: Found label after column 1. (GOSUB?L)
+Error[122]  : Illegal opcode (_ZAMAN_OKU)
+                      00679         GOSUB?L _ZAMAN_OKU
+Warning[207]: Found label after column 1. (ICALL?L)
+Error[122]  : Illegal opcode (L00001)
+                      00680         ICALL?L L00001
+Warning[207]: Found label after column 1. (MOVE?CB)
+Error[108]  : Illegal character (0)
+                      00681         MOVE?CB 000h, _Y
+Warning[207]: Found label after column 1. (ICALL?L)
+Error[122]  : Illegal opcode (L00001)
+                      00682         ICALL?L L00001
+Warning[207]: Found label after column 1. (MOVE?CT)
+Error[108]  : Illegal character (0)
+                      00683         MOVE?CT 000h, _POZ
+Warning[207]: Found label after column 1. (ICALL?L)
+Error[122]  : Illegal opcode (L00001)
+                      00684         ICALL?L L00001
+Warning[207]: Found label after column 1. (GOTO?L)
+Error[122]  : Illegal opcode (_BASLA)
+                      00685         GOTO?L  _BASLA
+                      00686 
+Warning[207]: Found label after column 1. (LABEL?L)
+Error[122]  : Illegal opcode (_FLASH)
+                      00687         LABEL?L _FLASH  
+Warning[207]: Found label after column 1. (ICALL?L)
+Error[122]  : Illegal opcode (L00001)
+                      00688         ICALL?L L00001
+Warning[207]: Found label after column 1. (TOGGLE?T)
+Error[122]  : Illegal opcode (PORTA)
+                      00689         TOGGLE?T        _PORTA_3
+Warning[207]: Found label after column 1. (ICALL?L)
+Error[122]  : Illegal opcode (L00001)
+                      00690         ICALL?L L00001
+Warning[207]: Found label after column 1. (GOSUB?L)
+Error[122]  : Illegal opcode (_DELAY)
+                      00691         GOSUB?L _DELAY
+Warning[207]: Found label after column 1. (ICALL?L)
+Error[122]  : Illegal opcode (L00001)
+                      00692         ICALL?L L00001
+Warning[207]: Found label after column 1. (TOGGLE?T)
+Error[122]  : Illegal opcode (PORTA)
+                      00693         TOGGLE?T        _PORTA_3
+Warning[207]: Found label after column 1. (ICALL?L)
+MPASM  5.35               SAAT-ISI-LED(7).ASM   3-6-2023  16:01:34         PAGE 35
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+Error[122]  : Illegal opcode (L00001)
+                      00694         ICALL?L L00001
+Warning[207]: Found label after column 1. (GOSUB?L)
+Error[122]  : Illegal opcode (_DELAY)
+                      00695         GOSUB?L _DELAY
+Warning[207]: Found label after column 1. (ICALL?L)
+Error[122]  : Illegal opcode (L00001)
+                      00696         ICALL?L L00001
+Warning[207]: Found label after column 1. (TOGGLE?T)
+Error[122]  : Illegal opcode (PORTA)
+                      00697         TOGGLE?T        _PORTA_3
+Warning[207]: Found label after column 1. (ICALL?L)
+Error[122]  : Illegal opcode (L00001)
+                      00698         ICALL?L L00001
+Warning[207]: Found label after column 1. (GOSUB?L)
+Error[122]  : Illegal opcode (_DELAY)
+                      00699         GOSUB?L _DELAY
+Warning[207]: Found label after column 1. (ICALL?L)
+Error[122]  : Illegal opcode (L00001)
+                      00700         ICALL?L L00001
+Warning[207]: Found label after column 1. (TOGGLE?T)
+Error[122]  : Illegal opcode (PORTA)
+                      00701         TOGGLE?T        _PORTA_3
+Warning[207]: Found label after column 1. (ICALL?L)
+Error[122]  : Illegal opcode (L00001)
+                      00702         ICALL?L L00001
+Warning[207]: Found label after column 1. (GOSUB?L)
+Error[122]  : Illegal opcode (_DELAY)
+                      00703         GOSUB?L _DELAY
+Warning[207]: Found label after column 1. (ICALL?L)
+Error[122]  : Illegal opcode (L00001)
+                      00704         ICALL?L L00001
+Warning[207]: Found label after column 1. (RETURN?)
+0000                  00705         RETURN? 
+                      00706 
+Warning[207]: Found label after column 1. (LABEL?L)
+Error[122]  : Illegal opcode (_TARIHAYAR)
+                      00707         LABEL?L _TARIHAYAR      
+Warning[207]: Found label after column 1. (ICALL?L)
+Error[122]  : Illegal opcode (L00001)
+                      00708         ICALL?L L00001
+Warning[207]: Found label after column 1. (LABEL?L)
+Error[122]  : Illegal opcode (L00045)
+                      00709         LABEL?L L00045  
+Warning[207]: Found label after column 1. (CMPNE?TCL)
+Error[122]  : Illegal opcode (PORTA)
+                      00710         CMPNE?TCL       _SEC, 000h, L00046
+Warning[207]: Found label after column 1. (ICALL?L)
+Error[122]  : Illegal opcode (L00001)
+                      00711         ICALL?L L00001
+Warning[207]: Found label after column 1. (GOTO?L)
+Error[122]  : Illegal opcode (L00045)
+                      00712         GOTO?L  L00045
+MPASM  5.35               SAAT-ISI-LED(7).ASM   3-6-2023  16:01:34         PAGE 36
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+Warning[207]: Found label after column 1. (LABEL?L)
+Error[122]  : Illegal opcode (L00046)
+                      00713         LABEL?L L00046  
+                      00714 
+Warning[207]: Found label after column 1. (LABEL?L)
+Error[122]  : Illegal opcode (_GUNAL)
+                      00715         LABEL?L _GUNAL  
+Warning[207]: Found label after column 1. (ICALL?L)
+Error[122]  : Illegal opcode (L00001)
+                      00716         ICALL?L L00001
+Warning[207]: Found label after column 1. (GOSUB?L)
+Error[122]  : Illegal opcode (_EKRAN2)
+                      00717         GOSUB?L _EKRAN2
+Warning[207]: Found label after column 1. (ICALL?L)
+Error[122]  : Illegal opcode (L00001)
+                      00718         ICALL?L L00001
+Warning[207]: Found label after column 1. (CMPEQ?TCL)
+Error[122]  : Illegal opcode (PORTA)
+                      00719         CMPEQ?TCL       _SEC, 000h, _AYBIR
+Warning[207]: Found label after column 1. (ICALL?L)
+Error[122]  : Illegal opcode (L00001)
+                      00720         ICALL?L L00001
+Warning[207]: Found label after column 1. (CMPNE?TCL)
+Error[122]  : Illegal opcode (PORTA)
+                      00721         CMPNE?TCL       _YUKARI, 000h, L00047
+Warning[207]: Found label after column 1. (ICALL?L)
+Error[122]  : Illegal opcode (L00001)
+                      00722         ICALL?L L00001
+Warning[207]: Found label after column 1. (ADD?BCB)
+Error[122]  : Illegal opcode (_GUN)
+                      00723         ADD?BCB _GUN, 001h, _GUN
+Warning[207]: Found label after column 1. (ICALL?L)
+Error[122]  : Illegal opcode (L00001)
+                      00724         ICALL?L L00001
+Warning[207]: Found label after column 1. (CMPNE?BCL)
+Error[122]  : Illegal opcode (_GUN)
+                      00725         CMPNE?BCL       _GUN, 020h, L00049
+Warning[207]: Found label after column 1. (MOVE?CB)
+Error[108]  : Illegal character (0)
+                      00726         MOVE?CB 001h, _GUN
+Warning[207]: Found label after column 1. (LABEL?L)
+Error[122]  : Illegal opcode (L00049)
+                      00727         LABEL?L L00049  
+Warning[207]: Found label after column 1. (ICALL?L)
+Error[122]  : Illegal opcode (L00001)
+                      00728         ICALL?L L00001
+Warning[207]: Found label after column 1. (LABEL?L)
+Error[122]  : Illegal opcode (L00047)
+                      00729         LABEL?L L00047  
+Warning[207]: Found label after column 1. (ICALL?L)
+Error[122]  : Illegal opcode (L00001)
+                      00730         ICALL?L L00001
+Warning[207]: Found label after column 1. (CMPNE?TCL)
+MPASM  5.35               SAAT-ISI-LED(7).ASM   3-6-2023  16:01:34         PAGE 37
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+Error[122]  : Illegal opcode (PORTA)
+                      00731         CMPNE?TCL       _ASAGI, 000h, L00051
+Warning[207]: Found label after column 1. (ICALL?L)
+Error[122]  : Illegal opcode (L00001)
+                      00732         ICALL?L L00001
+Warning[207]: Found label after column 1. (SUB?BCB)
+Error[122]  : Illegal opcode (_GUN)
+                      00733         SUB?BCB _GUN, 001h, _GUN
+Warning[207]: Found label after column 1. (ICALL?L)
+Error[122]  : Illegal opcode (L00001)
+                      00734         ICALL?L L00001
+Warning[207]: Found label after column 1. (CMPNE?BCL)
+Error[122]  : Illegal opcode (_GUN)
+                      00735         CMPNE?BCL       _GUN, 0FFh, L00053
+Warning[207]: Found label after column 1. (MOVE?CB)
+Error[108]  : Illegal character (0)
+                      00736         MOVE?CB 01Fh, _SAAT
+Warning[207]: Found label after column 1. (LABEL?L)
+Error[122]  : Illegal opcode (L00053)
+                      00737         LABEL?L L00053  
+Warning[207]: Found label after column 1. (ICALL?L)
+Error[122]  : Illegal opcode (L00001)
+                      00738         ICALL?L L00001
+Warning[207]: Found label after column 1. (LABEL?L)
+Error[122]  : Illegal opcode (L00051)
+                      00739         LABEL?L L00051  
+Warning[207]: Found label after column 1. (ICALL?L)
+Error[122]  : Illegal opcode (L00001)
+                      00740         ICALL?L L00001
+Warning[207]: Found label after column 1. (GOSUB?L)
+Error[122]  : Illegal opcode (_GECIKME)
+                      00741         GOSUB?L _GECIKME
+Warning[207]: Found label after column 1. (ICALL?L)
+Error[122]  : Illegal opcode (L00001)
+                      00742         ICALL?L L00001
+Warning[207]: Found label after column 1. (GOTO?L)
+Error[122]  : Illegal opcode (_GUNAL)
+                      00743         GOTO?L  _GUNAL
+                      00744 
+Warning[207]: Found label after column 1. (LABEL?L)
+Error[122]  : Illegal opcode (_AYBIR)
+                      00745         LABEL?L _AYBIR  
+Warning[207]: Found label after column 1. (ICALL?L)
+Error[122]  : Illegal opcode (L00001)
+                      00746         ICALL?L L00001
+Warning[207]: Found label after column 1. (GOSUB?L)
+Error[122]  : Illegal opcode (_FLASH)
+                      00747         GOSUB?L _FLASH
+Warning[207]: Found label after column 1. (ICALL?L)
+Error[122]  : Illegal opcode (L00001)
+                      00748         ICALL?L L00001
+Warning[207]: Found label after column 1. (LABEL?L)
+Error[122]  : Illegal opcode (L00055)
+MPASM  5.35               SAAT-ISI-LED(7).ASM   3-6-2023  16:01:34         PAGE 38
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+                      00749         LABEL?L L00055  
+Warning[207]: Found label after column 1. (CMPNE?TCL)
+Error[122]  : Illegal opcode (PORTA)
+                      00750         CMPNE?TCL       _SEC, 000h, L00056
+Warning[207]: Found label after column 1. (ICALL?L)
+Error[122]  : Illegal opcode (L00001)
+                      00751         ICALL?L L00001
+Warning[207]: Found label after column 1. (GOTO?L)
+Error[122]  : Illegal opcode (L00055)
+                      00752         GOTO?L  L00055
+Warning[207]: Found label after column 1. (LABEL?L)
+Error[122]  : Illegal opcode (L00056)
+                      00753         LABEL?L L00056  
+                      00754 
+Warning[207]: Found label after column 1. (LABEL?L)
+Error[122]  : Illegal opcode (_AYAL)
+                      00755         LABEL?L _AYAL   
+Warning[207]: Found label after column 1. (ICALL?L)
+Error[122]  : Illegal opcode (L00001)
+                      00756         ICALL?L L00001
+Warning[207]: Found label after column 1. (GOSUB?L)
+Error[122]  : Illegal opcode (_EKRAN2)
+                      00757         GOSUB?L _EKRAN2
+Warning[207]: Found label after column 1. (ICALL?L)
+Error[122]  : Illegal opcode (L00001)
+                      00758         ICALL?L L00001
+Warning[207]: Found label after column 1. (CMPEQ?TCL)
+Error[122]  : Illegal opcode (PORTA)
+                      00759         CMPEQ?TCL       _SEC, 000h, _YILBIR
+Warning[207]: Found label after column 1. (ICALL?L)
+Error[122]  : Illegal opcode (L00001)
+                      00760         ICALL?L L00001
+Warning[207]: Found label after column 1. (CMPNE?TCL)
+Error[122]  : Illegal opcode (PORTA)
+                      00761         CMPNE?TCL       _YUKARI, 000h, L00057
+Warning[207]: Found label after column 1. (ICALL?L)
+Error[122]  : Illegal opcode (L00001)
+                      00762         ICALL?L L00001
+Warning[207]: Found label after column 1. (ADD?BCB)
+Error[122]  : Illegal opcode (_AY)
+                      00763         ADD?BCB _AY, 001h, _AY
+Warning[207]: Found label after column 1. (ICALL?L)
+Error[122]  : Illegal opcode (L00001)
+                      00764         ICALL?L L00001
+Warning[207]: Found label after column 1. (CMPNE?BCL)
+Error[122]  : Illegal opcode (_AY)
+                      00765         CMPNE?BCL       _AY, 00Dh, L00059
+Warning[207]: Found label after column 1. (MOVE?CB)
+Error[108]  : Illegal character (0)
+                      00766         MOVE?CB 001h, _AY
+Warning[207]: Found label after column 1. (LABEL?L)
+Error[122]  : Illegal opcode (L00059)
+                      00767         LABEL?L L00059  
+MPASM  5.35               SAAT-ISI-LED(7).ASM   3-6-2023  16:01:34         PAGE 39
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+Warning[207]: Found label after column 1. (ICALL?L)
+Error[122]  : Illegal opcode (L00001)
+                      00768         ICALL?L L00001
+Warning[207]: Found label after column 1. (LABEL?L)
+Error[122]  : Illegal opcode (L00057)
+                      00769         LABEL?L L00057  
+Warning[207]: Found label after column 1. (ICALL?L)
+Error[122]  : Illegal opcode (L00001)
+                      00770         ICALL?L L00001
+Warning[207]: Found label after column 1. (CMPNE?TCL)
+Error[122]  : Illegal opcode (PORTA)
+                      00771         CMPNE?TCL       _ASAGI, 000h, L00061
+Warning[207]: Found label after column 1. (ICALL?L)
+Error[122]  : Illegal opcode (L00001)
+                      00772         ICALL?L L00001
+Warning[207]: Found label after column 1. (SUB?BCB)
+Error[122]  : Illegal opcode (_AY)
+                      00773         SUB?BCB _AY, 001h, _AY
+Warning[207]: Found label after column 1. (ICALL?L)
+Error[122]  : Illegal opcode (L00001)
+                      00774         ICALL?L L00001
+Warning[207]: Found label after column 1. (CMPNE?BCL)
+Error[122]  : Illegal opcode (_AY)
+                      00775         CMPNE?BCL       _AY, 0FFh, L00063
+Warning[207]: Found label after column 1. (MOVE?CB)
+Error[108]  : Illegal character (0)
+                      00776         MOVE?CB 00Ch, _AY
+Warning[207]: Found label after column 1. (LABEL?L)
+Error[122]  : Illegal opcode (L00063)
+                      00777         LABEL?L L00063  
+Warning[207]: Found label after column 1. (ICALL?L)
+Error[122]  : Illegal opcode (L00001)
+                      00778         ICALL?L L00001
+Warning[207]: Found label after column 1. (LABEL?L)
+Error[122]  : Illegal opcode (L00061)
+                      00779         LABEL?L L00061  
+Warning[207]: Found label after column 1. (ICALL?L)
+Error[122]  : Illegal opcode (L00001)
+                      00780         ICALL?L L00001
+Warning[207]: Found label after column 1. (GOSUB?L)
+Error[122]  : Illegal opcode (_GECIKME)
+                      00781         GOSUB?L _GECIKME
+Warning[207]: Found label after column 1. (ICALL?L)
+Error[122]  : Illegal opcode (L00001)
+                      00782         ICALL?L L00001
+Warning[207]: Found label after column 1. (GOTO?L)
+Error[122]  : Illegal opcode (_AYAL)
+                      00783         GOTO?L  _AYAL
+                      00784 
+Warning[207]: Found label after column 1. (LABEL?L)
+Error[122]  : Illegal opcode (_YILBIR)
+                      00785         LABEL?L _YILBIR 
+Warning[207]: Found label after column 1. (ICALL?L)
+MPASM  5.35               SAAT-ISI-LED(7).ASM   3-6-2023  16:01:34         PAGE 40
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+Error[122]  : Illegal opcode (L00001)
+                      00786         ICALL?L L00001
+Warning[207]: Found label after column 1. (GOSUB?L)
+Error[122]  : Illegal opcode (_FLASH)
+                      00787         GOSUB?L _FLASH
+Warning[207]: Found label after column 1. (ICALL?L)
+Error[122]  : Illegal opcode (L00001)
+                      00788         ICALL?L L00001
+Warning[207]: Found label after column 1. (LABEL?L)
+Error[122]  : Illegal opcode (L00065)
+                      00789         LABEL?L L00065  
+Warning[207]: Found label after column 1. (CMPNE?TCL)
+Error[122]  : Illegal opcode (PORTA)
+                      00790         CMPNE?TCL       _SEC, 000h, L00066
+Warning[207]: Found label after column 1. (ICALL?L)
+Error[122]  : Illegal opcode (L00001)
+                      00791         ICALL?L L00001
+Warning[207]: Found label after column 1. (GOTO?L)
+Error[122]  : Illegal opcode (L00065)
+                      00792         GOTO?L  L00065
+Warning[207]: Found label after column 1. (LABEL?L)
+Error[122]  : Illegal opcode (L00066)
+                      00793         LABEL?L L00066  
+                      00794 
+Warning[207]: Found label after column 1. (LABEL?L)
+Error[122]  : Illegal opcode (_YILAL)
+                      00795         LABEL?L _YILAL  
+Warning[207]: Found label after column 1. (ICALL?L)
+Error[122]  : Illegal opcode (L00001)
+                      00796         ICALL?L L00001
+Warning[207]: Found label after column 1. (GOSUB?L)
+Error[122]  : Illegal opcode (_EKRAN2)
+                      00797         GOSUB?L _EKRAN2
+Warning[207]: Found label after column 1. (ICALL?L)
+Error[122]  : Illegal opcode (L00001)
+                      00798         ICALL?L L00001
+Warning[207]: Found label after column 1. (CMPEQ?TCL)
+Error[122]  : Illegal opcode (PORTA)
+                      00799         CMPEQ?TCL       _SEC, 000h, _ara
+Warning[207]: Found label after column 1. (ICALL?L)
+Error[122]  : Illegal opcode (L00001)
+                      00800         ICALL?L L00001
+Warning[207]: Found label after column 1. (CMPNE?TCL)
+Error[122]  : Illegal opcode (PORTA)
+                      00801         CMPNE?TCL       _YUKARI, 000h, L00067
+Warning[207]: Found label after column 1. (ICALL?L)
+Error[122]  : Illegal opcode (L00001)
+                      00802         ICALL?L L00001
+Warning[207]: Found label after column 1. (ADD?BCB)
+Error[122]  : Illegal opcode (_YIL)
+                      00803         ADD?BCB _YIL, 001h, _YIL
+Warning[207]: Found label after column 1. (ICALL?L)
+Error[122]  : Illegal opcode (L00001)
+MPASM  5.35               SAAT-ISI-LED(7).ASM   3-6-2023  16:01:34         PAGE 41
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+                      00804         ICALL?L L00001
+Warning[207]: Found label after column 1. (CMPNE?BCL)
+Error[122]  : Illegal opcode (_YIL)
+                      00805         CMPNE?BCL       _YIL, 064h, L00069
+Warning[207]: Found label after column 1. (MOVE?CB)
+Error[108]  : Illegal character (0)
+                      00806         MOVE?CB 000h, _YIL
+Warning[207]: Found label after column 1. (LABEL?L)
+Error[122]  : Illegal opcode (L00069)
+                      00807         LABEL?L L00069  
+Warning[207]: Found label after column 1. (ICALL?L)
+Error[122]  : Illegal opcode (L00001)
+                      00808         ICALL?L L00001
+Warning[207]: Found label after column 1. (LABEL?L)
+Error[122]  : Illegal opcode (L00067)
+                      00809         LABEL?L L00067  
+Warning[207]: Found label after column 1. (ICALL?L)
+Error[122]  : Illegal opcode (L00001)
+                      00810         ICALL?L L00001
+Warning[207]: Found label after column 1. (CMPNE?TCL)
+Error[122]  : Illegal opcode (PORTA)
+                      00811         CMPNE?TCL       _ASAGI, 000h, L00071
+Warning[207]: Found label after column 1. (ICALL?L)
+Error[122]  : Illegal opcode (L00001)
+                      00812         ICALL?L L00001
+Warning[207]: Found label after column 1. (SUB?BCB)
+Error[122]  : Illegal opcode (_YIL)
+                      00813         SUB?BCB _YIL, 001h, _YIL
+Warning[207]: Found label after column 1. (ICALL?L)
+Error[122]  : Illegal opcode (L00001)
+                      00814         ICALL?L L00001
+Warning[207]: Found label after column 1. (CMPNE?BCL)
+Error[122]  : Illegal opcode (_YIL)
+                      00815         CMPNE?BCL       _YIL, 0FFh, L00073
+Warning[207]: Found label after column 1. (MOVE?CB)
+Error[108]  : Illegal character (0)
+                      00816         MOVE?CB 063h, _YIL
+Warning[207]: Found label after column 1. (LABEL?L)
+Error[122]  : Illegal opcode (L00073)
+                      00817         LABEL?L L00073  
+Warning[207]: Found label after column 1. (ICALL?L)
+Error[122]  : Illegal opcode (L00001)
+                      00818         ICALL?L L00001
+Warning[207]: Found label after column 1. (LABEL?L)
+Error[122]  : Illegal opcode (L00071)
+                      00819         LABEL?L L00071  
+Warning[207]: Found label after column 1. (ICALL?L)
+Error[122]  : Illegal opcode (L00001)
+                      00820         ICALL?L L00001
+Warning[207]: Found label after column 1. (GOSUB?L)
+Error[122]  : Illegal opcode (_GECIKME)
+                      00821         GOSUB?L _GECIKME
+Warning[207]: Found label after column 1. (ICALL?L)
+MPASM  5.35               SAAT-ISI-LED(7).ASM   3-6-2023  16:01:34         PAGE 42
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+Error[122]  : Illegal opcode (L00001)
+                      00822         ICALL?L L00001
+Warning[207]: Found label after column 1. (GOTO?L)
+Error[122]  : Illegal opcode (_YILAL)
+                      00823         GOTO?L  _YILAL
+                      00824 
+Warning[207]: Found label after column 1. (LABEL?L)
+Error[122]  : Illegal opcode (_SENSOROKU)
+                      00825         LABEL?L _SENSOROKU      
+Warning[207]: Found label after column 1. (ICALL?L)
+Error[122]  : Illegal opcode (L00001)
+                      00826         ICALL?L L00001
+Warning[207]: Found label after column 1. (OWPIN?T)
+Error[122]  : Illegal opcode (PORTA)
+                      00827         OWPIN?T _Comm_Pin
+Warning[207]: Found label after column 1. (OWMODE?C)
+Error[108]  : Illegal character (0)
+                      00828         OWMODE?C        001h
+Warning[207]: Found label after column 1. (OWOUT?C)
+Error[108]  : Illegal character (0)
+                      00829         OWOUT?C 0CCh
+Warning[207]: Found label after column 1. (OWOUT?C)
+Error[108]  : Illegal character (0)
+                      00830         OWOUT?C 044h
+Warning[207]: Found label after column 1. (OWEND?)
+0000                  00831         OWEND?  
+                      00832 
+Warning[207]: Found label after column 1. (LABEL?L)
+Error[122]  : Illegal opcode (_Bekle)
+                      00833         LABEL?L _Bekle  
+Warning[207]: Found label after column 1. (ICALL?L)
+Error[122]  : Illegal opcode (L00001)
+                      00834         ICALL?L L00001
+Warning[207]: Found label after column 1. (OWPIN?T)
+Error[122]  : Illegal opcode (PORTA)
+                      00835         OWPIN?T _Comm_Pin
+Warning[207]: Found label after column 1. (OWMODE?C)
+Error[108]  : Illegal character (0)
+                      00836         OWMODE?C        004h
+Warning[207]: Found label after column 1. (OWIN?T)
+Error[122]  : Illegal opcode (PB01)
+                      00837         OWIN?T  _Busy
+Warning[207]: Found label after column 1. (OWEND?)
+0000                  00838         OWEND?  
+Warning[207]: Found label after column 1. (ICALL?L)
+Error[122]  : Illegal opcode (L00001)
+0000                  00839         ICALL?L L00001
+Warning[207]: Found label after column 1. (CMPEQ?TCL)
+Error[122]  : Illegal opcode (PB01)
+0000                  00840         CMPEQ?TCL       _Busy, 000h, _Bekle
+Warning[207]: Found label after column 1. (ICALL?L)
+Error[122]  : Illegal opcode (L00001)
+0000                  00841         ICALL?L L00001
+MPASM  5.35               SAAT-ISI-LED(7).ASM   3-6-2023  16:01:34         PAGE 43
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+Warning[207]: Found label after column 1. (OWPIN?T)
+Error[122]  : Illegal opcode (PORTA)
+0000                  00842         OWPIN?T _Comm_Pin
+Warning[207]: Found label after column 1. (OWMODE?C)
+Error[108]  : Illegal character (0)
+0000                  00843         OWMODE?C        001h
+Warning[207]: Found label after column 1. (OWOUT?C)
+Error[108]  : Illegal character (0)
+0000                  00844         OWOUT?C 0CCh
+Warning[207]: Found label after column 1. (OWOUT?C)
+Error[108]  : Illegal character (0)
+0000                  00845         OWOUT?C 0BEh
+Warning[207]: Found label after column 1. (OWEND?)
+0000                  00846         OWEND?  
+Warning[207]: Found label after column 1. (ICALL?L)
+Error[122]  : Illegal opcode (L00001)
+0000                  00847         ICALL?L L00001
+Warning[207]: Found label after column 1. (OWPIN?T)
+Error[122]  : Illegal opcode (PORTA)
+0000                  00848         OWPIN?T _Comm_Pin
+Warning[207]: Found label after column 1. (OWMODE?C)
+Error[108]  : Illegal character (0)
+0000                  00849         OWMODE?C        002h
+Warning[207]: Found label after column 1. (OWIN?B)
+Error[122]  : Illegal opcode (_HAM_LOWBYTE)
+0000                  00850         OWIN?B  _HAM_LOWBYTE
+Warning[207]: Found label after column 1. (OWIN?B)
+Error[122]  : Illegal opcode (_HAM_HIGHBYTE)
+0000                  00851         OWIN?B  _HAM_HIGHBYTE
+Warning[207]: Found label after column 1. (OWEND?)
+0000                  00852         OWEND?  
+Warning[207]: Found label after column 1. (ICALL?L)
+Error[122]  : Illegal opcode (L00001)
+0000                  00853         ICALL?L L00001
+Warning[207]: Found label after column 1. (GOSUB?L)
+Error[122]  : Illegal opcode (_Hesapla)
+0000                  00854         GOSUB?L _Hesapla
+Warning[207]: Found label after column 1. (ICALL?L)
+Error[122]  : Illegal opcode (L00001)
+0000                  00855         ICALL?L L00001
+Warning[207]: Found label after column 1. (RETURN?)
+0000                  00856         RETURN? 
+                      00857 
+Warning[207]: Found label after column 1. (LABEL?L)
+Error[122]  : Illegal opcode (_Hesapla)
+                      00858         LABEL?L _Hesapla        
+Warning[207]: Found label after column 1. (ICALL?L)
+Error[122]  : Illegal opcode (L00001)
+                      00859         ICALL?L L00001
+Warning[207]: Found label after column 1. (MOVE?CB)
+Error[108]  : Illegal character (0)
+                      00860         MOVE?CB 02Bh, _SIGN
+Warning[207]: Found label after column 1. (ICALL?L)
+MPASM  5.35               SAAT-ISI-LED(7).ASM   3-6-2023  16:01:34         PAGE 44
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+Error[122]  : Illegal opcode (L00001)
+                      00861         ICALL?L L00001
+Warning[207]: Found label after column 1. (CMPNE?TCL)
+Error[122]  : Illegal opcode (_HAM)
+                      00862         CMPNE?TCL       _SIGN_BITI, _NEGAT_ISI, L00075
+Warning[207]: Found label after column 1. (ICALL?L)
+Error[122]  : Illegal opcode (L00001)
+                      00863         ICALL?L L00001
+Warning[207]: Found label after column 1. (MOVE?CB)
+Error[108]  : Illegal character (0)
+                      00864         MOVE?CB 02Dh, _SIGN
+Warning[207]: Found label after column 1. (ICALL?L)
+Error[122]  : Illegal opcode (L00001)
+                      00865         ICALL?L L00001
+Warning[207]: Found label after column 1. (SUB?CWW)
+Error[108]  : Illegal character (0)
+                      00866         SUB?CWW 0FFFFh, _HAM, T1
+Warning[207]: Found label after column 1. (ADD?WCW)
+Error[122]  : Illegal opcode (T1)
+                      00867         ADD?WCW T1, 001h, T1
+Warning[207]: Found label after column 1. (MUL?WCB)
+Error[122]  : Illegal opcode (T1)
+                      00868         MUL?WCB T1, 00271h, _TEMP
+Warning[207]: Found label after column 1. (ICALL?L)
+Error[122]  : Illegal opcode (L00001)
+                      00869         ICALL?L L00001
+Warning[207]: Found label after column 1. (DIV32?CW)
+Error[108]  : Illegal character (0)
+                      00870         DIV32?CW        00Ah, _ISI
+Warning[207]: Found label after column 1. (ICALL?L)
+Error[122]  : Illegal opcode (L00001)
+                      00871         ICALL?L L00001
+Warning[207]: Found label after column 1. (GOTO?L)
+Error[122]  : Illegal opcode (_GEC)
+                      00872         GOTO?L  _GEC
+Warning[207]: Found label after column 1. (ICALL?L)
+Error[122]  : Illegal opcode (L00001)
+                      00873         ICALL?L L00001
+Warning[207]: Found label after column 1. (LABEL?L)
+Error[122]  : Illegal opcode (L00075)
+                      00874         LABEL?L L00075  
+Warning[207]: Found label after column 1. (ICALL?L)
+Error[122]  : Illegal opcode (L00001)
+                      00875         ICALL?L L00001
+Warning[207]: Found label after column 1. (ADD?WCW)
+Error[122]  : Illegal opcode (_HAM)
+                      00876         ADD?WCW _HAM, 001h, T1
+Warning[207]: Found label after column 1. (MUL?CWB)
+Error[108]  : Illegal character (0)
+                      00877         MUL?CWB 00271h, T1, _TEMP
+Warning[207]: Found label after column 1. (ICALL?L)
+Error[122]  : Illegal opcode (L00001)
+                      00878         ICALL?L L00001
+MPASM  5.35               SAAT-ISI-LED(7).ASM   3-6-2023  16:01:34         PAGE 45
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+Warning[207]: Found label after column 1. (DIV32?CW)
+Error[108]  : Illegal character (0)
+                      00879         DIV32?CW        00Ah, _ISI
+                      00880 
+Warning[207]: Found label after column 1. (LABEL?L)
+Error[122]  : Illegal opcode (_GEC)
+                      00881         LABEL?L _GEC    
+Warning[207]: Found label after column 1. (ICALL?L)
+Error[122]  : Illegal opcode (L00001)
+                      00882         ICALL?L L00001
+Warning[207]: Found label after column 1. (MOD?WCW)
+Error[122]  : Illegal opcode (_ISI)
+                      00883         MOD?WCW _ISI, 003E8h, T1
+Warning[207]: Found label after column 1. (DIV?WCW)
+Error[122]  : Illegal opcode (T1)
+                      00884         DIV?WCW T1, 064h, _Float
+Warning[207]: Found label after column 1. (ICALL?L)
+Error[122]  : Illegal opcode (L00001)
+                      00885         ICALL?L L00001
+Warning[207]: Found label after column 1. (DIV?WCW)
+Error[122]  : Illegal opcode (_ISI)
+                      00886         DIV?WCW _ISI, 003E8h, _ISI
+Warning[207]: Found label after column 1. (ICALL?L)
+Error[122]  : Illegal opcode (L00001)
+                      00887         ICALL?L L00001
+Warning[207]: Found label after column 1. (RETURN?)
+0000                  00888         RETURN? 
+                      00889 
+Warning[207]: Found label after column 1. (LABEL?L)
+Error[122]  : Illegal opcode (_ZAMAN_OKU)
+                      00890         LABEL?L _ZAMAN_OKU      
+Warning[207]: Found label after column 1. (ICALL?L)
+Error[122]  : Illegal opcode (L00001)
+                      00891         ICALL?L L00001
+Warning[207]: Found label after column 1. (HIGH?T)
+Error[122]  : Illegal opcode (PORTA)
+                      00892         HIGH?T  _RTC_RST
+Warning[207]: Found label after column 1. (ICALL?L)
+Error[122]  : Illegal opcode (L00001)
+                      00893         ICALL?L L00001
+Warning[207]: Found label after column 1. (SHIFTDATA?T)
+Error[122]  : Illegal opcode (PORTA)
+                      00894         SHIFTDATA?T     _RTC_DTA
+Warning[207]: Found label after column 1. (SHIFTCLOCK?T)
+Error[122]  : Illegal opcode (PORTA)
+                      00895         SHIFTCLOCK?T    _RTC_CLK
+Warning[207]: Found label after column 1. (SHIFTMODE?C)
+Error[108]  : Illegal character (0)
+                      00896         SHIFTMODE?C     000h
+Warning[207]: Found label after column 1. (SHIFTOUT?CC)
+Error[108]  : Illegal character (0)
+                      00897         SHIFTOUT?CC     0BFh, 008h
+Warning[207]: Found label after column 1. (ICALL?L)
+MPASM  5.35               SAAT-ISI-LED(7).ASM   3-6-2023  16:01:34         PAGE 46
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+Error[122]  : Illegal opcode (L00001)
+                      00898         ICALL?L L00001
+Warning[207]: Found label after column 1. (SHIFTDATA?T)
+Error[122]  : Illegal opcode (PORTA)
+                      00899         SHIFTDATA?T     _RTC_DTA
+Warning[207]: Found label after column 1. (SHIFTCLOCK?T)
+Error[122]  : Illegal opcode (PORTA)
+                      00900         SHIFTCLOCK?T    _RTC_CLK
+Warning[207]: Found label after column 1. (SHIFTMODE?C)
+Error[108]  : Illegal character (0)
+                      00901         SHIFTMODE?C     001h
+Warning[207]: Found label after column 1. (SHIFTIN?BC)
+Error[122]  : Illegal opcode (_SN)
+                      00902         SHIFTIN?BC      _SN, 008h
+Warning[207]: Found label after column 1. (SHIFTIN?BC)
+Error[122]  : Illegal opcode (_DAK)
+                      00903         SHIFTIN?BC      _DAK, 008h
+Warning[207]: Found label after column 1. (SHIFTIN?BC)
+Error[122]  : Illegal opcode (_SAAT)
+                      00904         SHIFTIN?BC      _SAAT, 008h
+Warning[207]: Found label after column 1. (SHIFTIN?BC)
+Error[122]  : Illegal opcode (_GUN)
+                      00905         SHIFTIN?BC      _GUN, 008h
+Warning[207]: Found label after column 1. (SHIFTIN?BC)
+Error[122]  : Illegal opcode (_AY)
+                      00906         SHIFTIN?BC      _AY, 008h
+Warning[207]: Found label after column 1. (SHIFTIN?BC)
+Error[122]  : Illegal opcode (_MEM)
+                      00907         SHIFTIN?BC      _MEM, 008h
+Warning[207]: Found label after column 1. (SHIFTIN?BC)
+Error[122]  : Illegal opcode (_YIL)
+                      00908         SHIFTIN?BC      _YIL, 008h
+Warning[207]: Found label after column 1. (SHIFTIN?BC)
+Error[122]  : Illegal opcode (_MEM)
+                      00909         SHIFTIN?BC      _MEM, 008h
+Warning[207]: Found label after column 1. (ICALL?L)
+Error[122]  : Illegal opcode (L00001)
+                      00910         ICALL?L L00001
+Warning[207]: Found label after column 1. (MOVE?BB)
+Error[122]  : Illegal opcode (_SN)
+                      00911         MOVE?BB _SN, _MEM
+Warning[207]: Found label after column 1. (ICALL?L)
+Error[122]  : Illegal opcode (L00001)
+                      00912         ICALL?L L00001
+Warning[207]: Found label after column 1. (GOSUB?L)
+Error[122]  : Illegal opcode (_CEVIR)
+                      00913         GOSUB?L _CEVIR
+Warning[207]: Found label after column 1. (ICALL?L)
+Error[122]  : Illegal opcode (L00001)
+                      00914         ICALL?L L00001
+Warning[207]: Found label after column 1. (MOVE?BB)
+Error[122]  : Illegal opcode (_SAYI)
+                      00915         MOVE?BB _SAYI, _SN
+MPASM  5.35               SAAT-ISI-LED(7).ASM   3-6-2023  16:01:34         PAGE 47
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+Warning[207]: Found label after column 1. (ICALL?L)
+Error[122]  : Illegal opcode (L00001)
+                      00916         ICALL?L L00001
+Warning[207]: Found label after column 1. (MOVE?BB)
+Error[122]  : Illegal opcode (_DAK)
+                      00917         MOVE?BB _DAK, _MEM
+Warning[207]: Found label after column 1. (ICALL?L)
+Error[122]  : Illegal opcode (L00001)
+                      00918         ICALL?L L00001
+Warning[207]: Found label after column 1. (GOSUB?L)
+Error[122]  : Illegal opcode (_CEVIR)
+                      00919         GOSUB?L _CEVIR
+Warning[207]: Found label after column 1. (ICALL?L)
+Error[122]  : Illegal opcode (L00001)
+                      00920         ICALL?L L00001
+Warning[207]: Found label after column 1. (MOVE?BB)
+Error[122]  : Illegal opcode (_SAYI)
+                      00921         MOVE?BB _SAYI, _DAK
+Warning[207]: Found label after column 1. (ICALL?L)
+Error[122]  : Illegal opcode (L00001)
+                      00922         ICALL?L L00001
+Warning[207]: Found label after column 1. (MOVE?BB)
+Error[122]  : Illegal opcode (_SAAT)
+                      00923         MOVE?BB _SAAT, _MEM
+Warning[207]: Found label after column 1. (ICALL?L)
+Error[122]  : Illegal opcode (L00001)
+                      00924         ICALL?L L00001
+Warning[207]: Found label after column 1. (GOSUB?L)
+Error[122]  : Illegal opcode (_CEVIR)
+                      00925         GOSUB?L _CEVIR
+Warning[207]: Found label after column 1. (ICALL?L)
+Error[122]  : Illegal opcode (L00001)
+                      00926         ICALL?L L00001
+Warning[207]: Found label after column 1. (MOVE?BB)
+Error[122]  : Illegal opcode (_SAYI)
+                      00927         MOVE?BB _SAYI, _SAAT
+Warning[207]: Found label after column 1. (ICALL?L)
+Error[122]  : Illegal opcode (L00001)
+                      00928         ICALL?L L00001
+Warning[207]: Found label after column 1. (MOVE?BB)
+Error[122]  : Illegal opcode (_GUN)
+                      00929         MOVE?BB _GUN, _MEM
+Warning[207]: Found label after column 1. (ICALL?L)
+Error[122]  : Illegal opcode (L00001)
+                      00930         ICALL?L L00001
+Warning[207]: Found label after column 1. (GOSUB?L)
+Error[122]  : Illegal opcode (_CEVIR)
+                      00931         GOSUB?L _CEVIR
+Warning[207]: Found label after column 1. (ICALL?L)
+Error[122]  : Illegal opcode (L00001)
+                      00932         ICALL?L L00001
+Warning[207]: Found label after column 1. (MOVE?BB)
+Error[122]  : Illegal opcode (_SAYI)
+MPASM  5.35               SAAT-ISI-LED(7).ASM   3-6-2023  16:01:34         PAGE 48
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+                      00933         MOVE?BB _SAYI, _GUN
+Warning[207]: Found label after column 1. (ICALL?L)
+Error[122]  : Illegal opcode (L00001)
+                      00934         ICALL?L L00001
+Warning[207]: Found label after column 1. (MOVE?BB)
+Error[122]  : Illegal opcode (_AY)
+                      00935         MOVE?BB _AY, _MEM
+Warning[207]: Found label after column 1. (ICALL?L)
+Error[122]  : Illegal opcode (L00001)
+                      00936         ICALL?L L00001
+Warning[207]: Found label after column 1. (GOSUB?L)
+Error[122]  : Illegal opcode (_CEVIR)
+                      00937         GOSUB?L _CEVIR
+Warning[207]: Found label after column 1. (ICALL?L)
+Error[122]  : Illegal opcode (L00001)
+                      00938         ICALL?L L00001
+Warning[207]: Found label after column 1. (MOVE?BB)
+Error[122]  : Illegal opcode (_SAYI)
+                      00939         MOVE?BB _SAYI, _AY
+Warning[207]: Found label after column 1. (ICALL?L)
+Error[122]  : Illegal opcode (L00001)
+                      00940         ICALL?L L00001
+Warning[207]: Found label after column 1. (MOVE?BB)
+Error[122]  : Illegal opcode (_YIL)
+                      00941         MOVE?BB _YIL, _MEM
+Warning[207]: Found label after column 1. (ICALL?L)
+Error[122]  : Illegal opcode (L00001)
+                      00942         ICALL?L L00001
+Warning[207]: Found label after column 1. (GOSUB?L)
+Error[122]  : Illegal opcode (_CEVIR)
+                      00943         GOSUB?L _CEVIR
+Warning[207]: Found label after column 1. (ICALL?L)
+Error[122]  : Illegal opcode (L00001)
+                      00944         ICALL?L L00001
+Warning[207]: Found label after column 1. (MOVE?BB)
+Error[122]  : Illegal opcode (_SAYI)
+                      00945         MOVE?BB _SAYI, _YIL
+Warning[207]: Found label after column 1. (ICALL?L)
+Error[122]  : Illegal opcode (L00001)
+                      00946         ICALL?L L00001
+Warning[207]: Found label after column 1. (LOW?T)
+Error[122]  : Illegal opcode (PORTA)
+                      00947         LOW?T   _RTC_RST
+Warning[207]: Found label after column 1. (ICALL?L)
+Error[122]  : Illegal opcode (L00001)
+                      00948         ICALL?L L00001
+Warning[207]: Found label after column 1. (RETURN?)
+0000                  00949         RETURN? 
+                      00950 
+Warning[207]: Found label after column 1. (LABEL?L)
+Error[122]  : Illegal opcode (_ZAMAN_YAZ)
+                      00951         LABEL?L _ZAMAN_YAZ      
+Warning[207]: Found label after column 1. (ICALL?L)
+MPASM  5.35               SAAT-ISI-LED(7).ASM   3-6-2023  16:01:34         PAGE 49
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+Error[122]  : Illegal opcode (L00001)
+                      00952         ICALL?L L00001
+Warning[207]: Found label after column 1. (HIGH?T)
+Error[122]  : Illegal opcode (PORTA)
+                      00953         HIGH?T  _RTC_RST
+Warning[207]: Found label after column 1. (ICALL?L)
+Error[122]  : Illegal opcode (L00001)
+                      00954         ICALL?L L00001
+Warning[207]: Found label after column 1. (SHIFTDATA?T)
+Error[122]  : Illegal opcode (PORTA)
+                      00955         SHIFTDATA?T     _RTC_DTA
+Warning[207]: Found label after column 1. (SHIFTCLOCK?T)
+Error[122]  : Illegal opcode (PORTA)
+                      00956         SHIFTCLOCK?T    _RTC_CLK
+Warning[207]: Found label after column 1. (SHIFTMODE?C)
+Error[108]  : Illegal character (0)
+                      00957         SHIFTMODE?C     000h
+Warning[207]: Found label after column 1. (SHIFTOUT?CC)
+Error[108]  : Illegal character (0)
+                      00958         SHIFTOUT?CC     08Eh, 008h
+Warning[207]: Found label after column 1. (SHIFTOUT?CC)
+Error[108]  : Illegal character (0)
+                      00959         SHIFTOUT?CC     000h, 008h
+Warning[207]: Found label after column 1. (ICALL?L)
+Error[122]  : Illegal opcode (L00001)
+                      00960         ICALL?L L00001
+Warning[207]: Found label after column 1. (LOW?T)
+Error[122]  : Illegal opcode (PORTA)
+                      00961         LOW?T   _RTC_RST
+Warning[207]: Found label after column 1. (ICALL?L)
+Error[122]  : Illegal opcode (L00001)
+                      00962         ICALL?L L00001
+Warning[207]: Found label after column 1. (PAUSEUS?C)
+Error[108]  : Illegal character (0)
+                      00963         PAUSEUS?C       00Ah
+Warning[207]: Found label after column 1. (ICALL?L)
+Error[122]  : Illegal opcode (L00001)
+                      00964         ICALL?L L00001
+Warning[207]: Found label after column 1. (HIGH?T)
+Error[122]  : Illegal opcode (PORTA)
+                      00965         HIGH?T  _RTC_RST
+Warning[207]: Found label after column 1. (ICALL?L)
+Error[122]  : Illegal opcode (L00001)
+                      00966         ICALL?L L00001
+Warning[207]: Found label after column 1. (SHIFTDATA?T)
+Error[122]  : Illegal opcode (PORTA)
+                      00967         SHIFTDATA?T     _RTC_DTA
+Warning[207]: Found label after column 1. (SHIFTCLOCK?T)
+Error[122]  : Illegal opcode (PORTA)
+                      00968         SHIFTCLOCK?T    _RTC_CLK
+Warning[207]: Found label after column 1. (SHIFTMODE?C)
+Error[108]  : Illegal character (0)
+                      00969         SHIFTMODE?C     000h
+MPASM  5.35               SAAT-ISI-LED(7).ASM   3-6-2023  16:01:34         PAGE 50
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+Warning[207]: Found label after column 1. (SHIFTOUT?CC)
+Error[108]  : Illegal character (0)
+                      00970         SHIFTOUT?CC     0BEh, 008h
+Warning[207]: Found label after column 1. (SHIFTOUT?BC)
+Error[122]  : Illegal opcode (_SN)
+                      00971         SHIFTOUT?BC     _SN, 008h
+Warning[207]: Found label after column 1. (SHIFTOUT?BC)
+Error[122]  : Illegal opcode (_DAK)
+                      00972         SHIFTOUT?BC     _DAK, 008h
+Warning[207]: Found label after column 1. (SHIFTOUT?BC)
+Error[122]  : Illegal opcode (_SAAT)
+                      00973         SHIFTOUT?BC     _SAAT, 008h
+Warning[207]: Found label after column 1. (SHIFTOUT?BC)
+Error[122]  : Illegal opcode (_GUN)
+                      00974         SHIFTOUT?BC     _GUN, 008h
+Warning[207]: Found label after column 1. (SHIFTOUT?BC)
+Error[122]  : Illegal opcode (_AY)
+                      00975         SHIFTOUT?BC     _AY, 008h
+Warning[207]: Found label after column 1. (SHIFTOUT?CC)
+Error[108]  : Illegal character (0)
+                      00976         SHIFTOUT?CC     000h, 008h
+Warning[207]: Found label after column 1. (SHIFTOUT?BC)
+Error[122]  : Illegal opcode (_YIL)
+                      00977         SHIFTOUT?BC     _YIL, 008h
+Warning[207]: Found label after column 1. (SHIFTOUT?CC)
+Error[108]  : Illegal character (0)
+                      00978         SHIFTOUT?CC     080h, 008h
+Warning[207]: Found label after column 1. (ICALL?L)
+Error[122]  : Illegal opcode (L00001)
+                      00979         ICALL?L L00001
+Warning[207]: Found label after column 1. (LOW?T)
+Error[122]  : Illegal opcode (PORTA)
+                      00980         LOW?T   _RTC_RST
+Warning[207]: Found label after column 1. (ICALL?L)
+Error[122]  : Illegal opcode (L00001)
+                      00981         ICALL?L L00001
+Warning[207]: Found label after column 1. (PAUSEUS?C)
+Error[108]  : Illegal character (0)
+                      00982         PAUSEUS?C       00Ah
+Warning[207]: Found label after column 1. (ICALL?L)
+Error[122]  : Illegal opcode (L00001)
+                      00983         ICALL?L L00001
+Warning[207]: Found label after column 1. (RETURN?)
+0000                  00984         RETURN? 
+                      00985 
+Warning[207]: Found label after column 1. (LABEL?L)
+Error[122]  : Illegal opcode (_CEVIR)
+                      00986         LABEL?L _CEVIR  
+Warning[207]: Found label after column 1. (ICALL?L)
+Error[122]  : Illegal opcode (L00001)
+                      00987         ICALL?L L00001
+Warning[207]: Found label after column 1. (AND?BCB)
+Error[122]  : Illegal opcode (_MEM)
+MPASM  5.35               SAAT-ISI-LED(7).ASM   3-6-2023  16:01:34         PAGE 51
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+                      00988         AND?BCB _MEM, 070h, _ONLAR
+Warning[207]: Found label after column 1. (ICALL?L)
+Error[122]  : Illegal opcode (L00001)
+                      00989         ICALL?L L00001
+Warning[207]: Found label after column 1. (SHIFTR?BCB)
+Error[122]  : Illegal opcode (_ONLAR)
+                      00990         SHIFTR?BCB      _ONLAR, 004h, _ONLAR
+Warning[207]: Found label after column 1. (ICALL?L)
+Error[122]  : Illegal opcode (L00001)
+                      00991         ICALL?L L00001
+Warning[207]: Found label after column 1. (AND?BCB)
+Error[122]  : Illegal opcode (_MEM)
+                      00992         AND?BCB _MEM, 00Fh, _BIRLER
+Warning[207]: Found label after column 1. (ICALL?L)
+Error[122]  : Illegal opcode (L00001)
+                      00993         ICALL?L L00001
+Warning[207]: Found label after column 1. (MUL?BCW)
+Error[122]  : Illegal opcode (_ONLAR)
+                      00994         MUL?BCW _ONLAR, 00Ah, T1
+Warning[207]: Found label after column 1. (ADD?WBB)
+Error[122]  : Illegal opcode (T1)
+                      00995         ADD?WBB T1, _BIRLER, _SAYI
+Warning[207]: Found label after column 1. (ICALL?L)
+Error[122]  : Illegal opcode (L00001)
+                      00996         ICALL?L L00001
+Warning[207]: Found label after column 1. (RETURN?)
+0000                  00997         RETURN? 
+                      00998 
+Warning[207]: Found label after column 1. (LABEL?L)
+Error[122]  : Illegal opcode (_TERSCEVIR)
+                      00999         LABEL?L _TERSCEVIR      
+Warning[207]: Found label after column 1. (ICALL?L)
+Error[122]  : Illegal opcode (L00001)
+                      01000         ICALL?L L00001
+Warning[207]: Found label after column 1. (DIG?BCB)
+Error[122]  : Illegal opcode (_MEM)
+                      01001         DIG?BCB _MEM, 001h, _ONLAR
+Warning[207]: Found label after column 1. (ICALL?L)
+Error[122]  : Illegal opcode (L00001)
+                      01002         ICALL?L L00001
+Warning[207]: Found label after column 1. (SHIFTL?BCB)
+Error[122]  : Illegal opcode (_ONLAR)
+                      01003         SHIFTL?BCB      _ONLAR, 004h, _ONLAR
+Warning[207]: Found label after column 1. (ICALL?L)
+Error[122]  : Illegal opcode (L00001)
+                      01004         ICALL?L L00001
+Warning[207]: Found label after column 1. (DIG?BCB)
+Error[122]  : Illegal opcode (_MEM)
+                      01005         DIG?BCB _MEM, 000h, _BIRLER
+Warning[207]: Found label after column 1. (ICALL?L)
+Error[122]  : Illegal opcode (L00001)
+                      01006         ICALL?L L00001
+Warning[207]: Found label after column 1. (ADD?BBB)
+MPASM  5.35               SAAT-ISI-LED(7).ASM   3-6-2023  16:01:34         PAGE 52
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+Error[122]  : Illegal opcode (_ONLAR)
+                      01007         ADD?BBB _ONLAR, _BIRLER, _SAYI
+Warning[207]: Found label after column 1. (ICALL?L)
+Error[122]  : Illegal opcode (L00001)
+                      01008         ICALL?L L00001
+Warning[207]: Found label after column 1. (RETURN?)
+0000                  01009         RETURN? 
+Warning[207]: Found label after column 1. (DISABLE?)
+0000                  01010         DISABLE?        
+                      01011 
+Warning[207]: Found label after column 1. (LABEL?L)
+Error[122]  : Illegal opcode (_KESME)
+                      01012         LABEL?L _KESME  
+Warning[207]: Found label after column 1. (CMPEQ?TCL)
+Error[122]  : Illegal opcode (PB01)
+                      01013         CMPEQ?TCL       _POZ, 001h, _CIK
+Warning[207]: Found label after column 1. (ADD?BCB)
+Error[122]  : Illegal opcode (_SAYAC)
+                      01014         ADD?BCB _SAYAC, 001h, _SAYAC
+Warning[207]: Found label after column 1. (CMPNE?BCL)
+Error[122]  : Illegal opcode (_SAYAC)
+                      01015         CMPNE?BCL       _SAYAC, 03Ah, L00077
+Warning[207]: Found label after column 1. (MOVE?CB)
+Error[108]  : Illegal character (0)
+                      01016         MOVE?CB 000h, _SAYAC
+Warning[207]: Found label after column 1. (ADD?BCB)
+Error[122]  : Illegal opcode (_Y)
+                      01017         ADD?BCB _Y, 001h, _Y
+Warning[207]: Found label after column 1. (GOSUB?L)
+Error[122]  : Illegal opcode (_ZAMAN_OKU)
+                      01018         GOSUB?L _ZAMAN_OKU
+Warning[207]: Found label after column 1. (CMPGE?BCL)
+Error[122]  : Illegal opcode (_Y)
+                      01019         CMPGE?BCL       _Y, 005h, L00079
+Warning[207]: Found label after column 1. (HIGH?T)
+Error[122]  : Illegal opcode (PORTA)
+                      01020         HIGH?T  _PORTA_3
+Warning[207]: Found label after column 1. (LABEL?L)
+Error[122]  : Illegal opcode (L00079)
+                      01021         LABEL?L L00079  
+Warning[207]: Found label after column 1. (LABEL?L)
+Error[122]  : Illegal opcode (L00077)
+                      01022         LABEL?L L00077  
+                      01023 
+Warning[207]: Found label after column 1. (LABEL?L)
+Error[122]  : Illegal opcode (_CIK)
+                      01024         LABEL?L _CIK    
+Warning[207]: Found label after column 1. (MOVE?CT)
+Error[108]  : Illegal character (0)
+                      01025         MOVE?CT 000h, _INTCON_2
+Warning[207]: Found label after column 1. (RESUME?)
+0000                  01026         RESUME? 
+Warning[207]: Found label after column 1. (ENABLE?)
+MPASM  5.35               SAAT-ISI-LED(7).ASM   3-6-2023  16:01:34         PAGE 53
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+0000                  01027         ENABLE? 
+Warning[207]: Found label after column 1. (ICALL?L)
+Error[122]  : Illegal opcode (L00001)
+0000                  01028         ICALL?L L00001
+Warning[207]: Found label after column 1. (END?)
+0000                  01029         END?    
+                      01030 
+                      01031         END
+MPASM  5.35               SAAT-ISI-LED(7).ASM   3-6-2023  16:01:34         PAGE 54
+
+
+SYMBOL TABLE
+  LABEL                             VALUE 
+
+ASM?                              00000000
+BANK0_END                         0000007F
+BANK0_START                       00000020
+BANK1_END                         000000EF
+BANK1_START                       000000A0
+BANK2_END                         0000014F
+BANK2_START                       00000120
+CLEAR?                            00000000
+DISABLE?                          00000000
+EEPROM_END                        0000217F
+EEPROM_START                      00002100
+ENABLE?                           00000000
+END?                              00000000
+ENDASM?                           00000000
+FLAGS                             00000036
+GOP                               00000037
+OWEND?                            00000000
+PB01                              0000004C
+PM_USED                           00000001
+R0                                00000020
+R1                                00000022
+R2                                00000024
+R3                                00000026
+R4                                00000028
+R5                                0000002A
+R6                                0000002C
+R7                                0000002E
+R8                                00000030
+RAM_BANKS                         00000003
+RAM_END                           0000014F
+RAM_START                         00000020
+RESUME?                           00000000
+RETURN?                           00000000
+RM1                               00000038
+RM2                               00000039
+RR1                               0000003A
+RR2                               0000003B
+T1                                00000032
+T2                                00000034
+_ASAGI                            _PORTA_6
+_AY                               00000044
+_BIRLER                           00000045
+_Busy                             PB01, 000h
+_CLK                              _PORTB_1
+_Comm_Pin                         _PORTA_4
+_DAK                              00000046
+_DTA                              _PORTB_0
+_Deg                              000000DF
+_ESN                              00000047
+_Float                            0000003C
+_GOR                              00000048
+_GUN                              00000049
+_HAM                              0000003E
+MPASM  5.35               SAAT-ISI-LED(7).ASM   3-6-2023  16:01:34         PAGE 55
+
+
+SYMBOL TABLE
+  LABEL                             VALUE 
+
+_HAM_BIT11                        _HAM + 001h, 003h
+_HAM_HIGHBYTE                     0000003F
+_HAM_LOWBYTE                      0000003E
+_INTCON_2                         INTCON, 002h
+_ISI                              00000040
+_MEM                              0000004A
+_NEGAT_ISI                        00000001
+_ONLAR                            0000004B
+_PORTA_0                          PORTA, 000h
+_PORTA_1                          PORTA, 001h
+_PORTA_2                          PORTA, 002h
+_PORTA_3                          PORTA, 003h
+_PORTA_4                          PORTA, 004h
+_PORTA_5                          PORTA, 005h
+_PORTA_6                          PORTA, 006h
+_PORTA_7                          PORTA, 007h
+_PORTB_0                          PORTB, 000h
+_PORTB_1                          PORTB, 001h
+_PORTB_2                          PORTB, 002h
+_PORTB_3                          PORTB, 003h
+_PORTB_4                          PORTB, 004h
+_PORTB_5                          PORTB, 005h
+_PORTB_6                          PORTB, 006h
+_PORTB_7                          PORTB, 007h
+_PORTH                            00000000
+_PORTL                            00000000
+_POZ                              PB01, 001h
+_RTC_CLK                          _PORTA_1
+_RTC_DTA                          _PORTA_0
+_RTC_RST                          _PORTA_2
+_SAAT                             0000004D
+_SAYAC                            0000004E
+_SAYI                             0000004F
+_SEC                              _PORTA_5
+_SIGN                             00000050
+_SIGN_BITI                        _HAM_BIT11
+_SN                               00000051
+_TEMP                             00000052
+_TRISH                            00000000
+_TRISL                            00000000
+_X                                00000042
+_Y                                00000053
+_YIL                              00000054
+_YUKARI                           _PORTA_7
+__16F628A                         00000001
+__DEBUG                           1
+MPASM  5.35               SAAT-ISI-LED(7).ASM   3-6-2023  16:01:34         PAGE 56
+
+
+MEMORY USAGE MAP ('X' = Used,  '-' = Unused)
+
+
+
+All other memory blocks unused.
+
+Program Memory Words Used:     0
+Program Memory Words Free:  2048
+
+
+Errors   :   853
+Warnings :   880 reported,     0 suppressed
+Messages :     0 reported,     0 suppressed
+
+
